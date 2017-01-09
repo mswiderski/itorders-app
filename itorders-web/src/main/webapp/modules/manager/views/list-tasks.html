@@ -1,0 +1,132 @@
+<header ng-include src="'modules/home/views/menu.html'">
+</header>
+<div class="container-fluid">
+<div class="row toolbar-pf">
+  <div class="col-sm-12">
+      <div class="row toolbar-pf-results">
+        <div class="col-sm-12">
+          <h5>{{tasks.length}} Results</h5>
+          <p>Active filters:</p>
+          <ul class="list-inline">
+            <li>
+              <span class="label label-info">
+                Name: nameofthething
+                <a href="#"><span class="pficon pficon-close"></span></a>
+              </span>
+            </li>
+            <li>
+              <span class="label label-info">
+                Name: nameofthething
+                <a href="#"><span class="pficon pficon-close"></span></a>
+              </span>
+            </li>
+            <li>
+              <span class="label label-info">
+                Name: nameofthething
+                <a href="#"><span class="pficon pficon-close"></span></a>
+              </span>
+            </li>
+          </ul>
+          <p><a href="#">Clear All Filters</a></p>
+        </div><!-- /col -->
+      </div><!-- /row -->
+  </div><!-- /col -->
+</div><!-- /row -->
+</div><!-- /container -->
+
+<div class="container-fluid">
+<div class="list-group list-view-pf list-view-pf-view">
+<div class="list-group-item" ng-repeat="task in tasks">
+<div class="list-view-pf-checkbox">
+  <input type="checkbox">
+</div>
+<div class="list-view-pf-actions">
+    <button class="btn btn-primary" data-toggle="modal" data-target="#approveModal" ng-click="selected(task['task-id'])">Approve</button>
+    <button class="btn btn-danger" data-toggle="modal" data-target="#rejectModal" ng-click="selected(task['task-id'])">Reject</button>
+</div>
+<div class="list-view-pf-main-info">
+  <div class="list-view-pf-left">
+    <span class="fa fa-magic list-view-pf-icon-sm"></span>
+  </div>
+  <div class="list-view-pf-body">
+    <div class="list-view-pf-description">
+      <div class="list-group-item-heading">
+        {{ task['task-name'] }}
+      </div>
+      <div class="list-group-item-text">
+        {{ task['task-description'] }} created at {{task['task-created-on'] | date:'dd.MM.yyyy HH:mm:ss'}}.
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid pull-right">
+    <ul class="pager">
+      <li class="previous" style="{{prevButtonStyle}}">
+        <a href="" ng-click="prevPage()">
+          <span class="i fa fa-angle-left"></span>
+          Previous
+        </a>
+      </li>
+      <li class="next" style="{{nextButtonStyle}}">
+        <a href="" ng-click="nextPage()">
+          Next
+          <span class="i fa fa-angle-right"></span>
+        </a>
+      </li>
+    </ul>
+</div>
+
+<div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <span class="pficon pficon-close"></span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Approval</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="textInput2-modal-markup">Comment (optional)</label>
+            <div class="col-sm-9">
+              <textarea rows="5" id="textInput2-modal-markup" class="form-control" ng-model="approveComment"></textarea></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="approve()" data-dismiss="modal">Approve</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+          <span class="pficon pficon-close"></span>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Rejection</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-3 control-label" for="textInput2-modal-markup">Comment (manadatory)</label>
+            <div class="col-sm-9">
+              <textarea rows="5" id="textInput2-modal-markup" class="form-control" ng-model="rejectComment" required></textarea></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-danger" ng-click="reject()" data-dismiss="modal">Reject</button>
+      </div>
+    </div>
+  </div>
+</div>

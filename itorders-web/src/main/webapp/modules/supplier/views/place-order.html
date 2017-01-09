@@ -1,0 +1,71 @@
+<header ng-include src="'modules/home/views/menu.html'">
+</header>
+<div>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2>{{ task['task-description'] }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="alert alert-danger" ng-show="data.error.code">
+                {{data.error.message}}
+            </div>
+            
+            <div class="row">
+               <div class="panel panel-default">
+                   <div class="panel-body">
+                       <h2>Hardware specification for {{task['task-input-data']['orderNumber']}}</h2>
+
+                       <div ng-if="hardwareSpec != null">
+                           <div class="alert alert-success alert-dismissable">
+                               <button type="button" class="close" data-dismiss="alert"
+                                   aria-hidden="true">
+                                   <span class="pficon pficon-close"></span>
+                               </button>
+                               <span class="pficon pficon-ok"></span> <strong>Hardware
+                                   specification is available!</strong></a>.
+                           </div>
+                           <ul class="list-group">
+                               <li class="list-group-item"><b>Name</b> {{
+                                   hardwareSpec.name }}</li>
+                               <li class="list-group-item"><b>Size</b> {{
+                                   hardwareSpec.size/1000 }} KB</li>
+                               <li class="list-group-item"><a href="{{downloadLink}}">
+                                       <b>Download</b> <span
+                                       class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                               </a></li>                 
+                           </ul>
+                       </div>
+                   </div>
+               </div>
+           </div>
+            <div class="row">
+	            <div class="panel panel-default" ng-hide="data.error.code || data.result">
+	                <div class="panel-heading">
+	                    <h3>Place order</h3>
+	                </div>
+	                <form name="createApplicationForm" novalidate="true">
+	                    <div class="panel-body">
+	                        <div class="form-group">
+	                            <label>Requestor name</label>
+	                            {{task['task-input-data']['requestor']}}
+	                        </div>
+	                        <div class="form-group">
+	                            <label>Order information</label>
+	                            <textarea rows="6" class="form-control" ng-model="orderInfo" ></textarea>
+	                        </div>	                        
+	                        <div class="form-group">
+	                            <hr/>
+	                            <button type="submit" class="btn btn-primary" ng-click="placeOrder()">Complete</button>
+	                        </div>
+	
+	                    </div>
+	                </form>
+	            </div>
+            </div>
+        </div>
+    </div>
+</div>

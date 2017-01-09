@@ -1,0 +1,19 @@
+<header ng-include src="'modules/home/views/menu.html'">
+</header>
+<div class="blank-slate-pf " id="">
+  <div class="blank-slate-pf-icon">
+    <span class="pficon pficon pficon-add-circle-o"></span>
+  </div>
+  <h1>
+    Lucky you, no actions for {{user}} were found
+  </h1>
+  <p>
+    Maybe it's time to ask for some hardware?!
+  </p>
+  <div class="blank-slate-pf-main-action">
+    <button class="btn btn-primary btn-lg" ng-click="go('/neworder')"> Place an oder </button>
+  </div>
+  <div class="blank-slate-pf-secondary-action">
+    <button class="btn btn-default"> Contact administrator </button> <button class="btn btn-default"> Ask for quatation </button> <button class="btn btn-default"> Request hardware list </button>
+  </div>
+</div>

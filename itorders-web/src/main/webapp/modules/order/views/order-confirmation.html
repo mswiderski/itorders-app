@@ -1,0 +1,30 @@
+<header ng-include src="'modules/home/views/menu.html'">
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>Order {{ order['case-id'] }} has been successfully submitted</h2>
+        </div>
+    </div>
+</div>
+<div class="container">
+<div class="panel panel-default" ng-controller="OrderController">
+  <div class="panel-heading">
+    <h3 class="panel-title">IT order receipt</h3>
+  </div>
+  <div class="panel-body" style="width: 60%">
+      <ul class="list-group">
+          <li class="list-group-item">Order number :: {{ order['case-id'] }}</li>
+          <li class="list-group-item">Owned by :: {{ order['case-owner'] }}</li>
+          <li class="list-group-item">Initiated at :: {{ order['case-started-at'] | asDate | date:'yyyy-MM-dd HH:mm:ss' }}</li>
+        </ul>
+  </div>
+</div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <a class="btn btn-primary btn-lg" ng-href="#/" role="button">OK</a>
+        </div>
+    </div>
+</div>

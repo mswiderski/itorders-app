@@ -1,0 +1,28 @@
+{
+  "name": "itorders-web",
+  "authors": [
+    "Maciej Swiderski <swiderski.maciej@gmail.com>"
+  ],
+  "description": "it orders web application",
+  "main": "index.html",
+  "license": "Apache",
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "patternfly": "^3.16.0",
+    "angular": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-cookies": "~1.4.0",    
+    "angular-loader": "~1.4.0",
+    "angular-mocks": "~1.4.0",
+    "html5-boilerplate": "~5.2.0",
+    "angular-resource": "~1.4.0"
+  }
+}

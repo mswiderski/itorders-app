@@ -1,0 +1,249 @@
+<header ng-include src="'modules/home/views/menu.html'">
+</header>
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1 sidebar-pf sidebar-pf-left full-height sidebar-actions"></div>
+        <div class="col-md-10">
+            <div class="container-fluid">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Order number {{ order['case-id'] }}</h3>
+                        <hr/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button type="button" class="col-md-1 btn btn-danger pull-right title-action" ng-click="closeOrder(order['case-id'])">Close</button>
+                        <div ng-if="managerDecision == false"> 
+                        <button type="button" class="col-md-1 btn btn-primary pull-right title-action" ng-click="requestManagerApproval(order['case-id'])">Request approval</button>
+                        </div>
+                        <div ng-if="milestones.get('Milestone 1: Order placed') != null && milestones.get('Milestone 2: Order shipped') == null">
+                            <button type="button" class="col-md-1 btn btn-primary pull-right title-action" ng-click="shipOrder(order['case-id'])">Ship order</button>
+                        </div>
+                        <div ng-if="milestones.get('Milestone 2: Order shipped') != null && milestones.get('Milestone 3: Delivered to customer') == null">
+                        <button type="button" class="col-md-1 btn btn-primary pull-right title-action" ng-click="deliverOrder(order['case-id'])">Deliver order</button>
+                        </div>                        
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <hr/>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-3">
+                      <div class="row">
+                          <div class="panel-group" id="accordion-markup" style="width:90%">
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h4 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion-markup" href="">
+                                    Hardware specification
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapseOne" class="panel-collapse collapse in">                              
+                                <div ng-if="milestones.get('Hardware spec ready') != null">
+	                                
+	                                <div class="alert alert-success alert-dismissable">								  
+									  <span class="pficon pficon-ok"></span>
+									  Hardware specification has been provided by supplier.<br>
+									  Completed at  {{milestones.get('Hardware spec ready') | date:'dd.MM.yyyy HH:mm:ss'}}
+									</div>                                 
+                                </div>
+                                <div ng-if="milestones.get('Hardware spec ready') == null">                                
+	                                <div class="alert alert-info alert-dismissable">
+									  <span class="pficon pficon-info"></span>
+									  Awaiting supplier to deliver hardware spec
+									</div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h4 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion-markup" href="">
+                                    Manager approval
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapseOne" class="panel-collapse collapse in">
+                                <div ng-if="milestones.get('Manager decision') != null">
+                                    
+	                                 <div ng-if="managerDecision == true">
+	                                    
+	                                    <div class="alert alert-success alert-dismissable">                               
+	                                      <span class="pficon pficon-ok"></span>
+	                                      Manager has approved this order.<br>
+	                                      Completed at  {{milestones.get('Manager decision') | date:'dd.MM.yyyy HH:mm:ss'}}
+	                                      <br/><br/>
+	                                      <strong>{{managerComment}}</strong>
+	                                    </div>                                 
+	                                </div>
+	                                <div ng-if="managerDecision == false">                                
+	                                    <div class="alert alert-danger alert-dismissable">
+	                                      <span class="pficon pficon-error-circle-o"></span>
+	                                      Manager rejected this order.
+	                                      <br/><br/>
+                                          <strong>{{managerComment}}</strong>
+	                                    </div>
+	                                </div>
+                                                              
+                                </div>
+                                <div ng-if="milestones.get('Manager decision') == null">                                
+                                    <div class="alert alert-info alert-dismissable">
+                                      <span class="pficon pficon-info"></span>
+                                      Awaiting manager decision
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h4 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion-markup" href="">
+                                    Order placed
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapseOne" class="panel-collapse collapse in">
+                                <div ng-if="milestones.get('Milestone 1: Order placed') != null">
+                                    
+                                    <div class="alert alert-success alert-dismissable">                               
+                                      <span class="pficon pficon-ok"></span>
+                                      Order has been placed.<br>
+                                      Completed at  {{milestones.get('Milestone 1: Order placed') | date:'dd.MM.yyyy HH:mm:ss'}}
+                                    </div>                                 
+                                </div>
+                                <div ng-if="milestones.get('Milestone 1: Order placed') == null">                                
+                                    <div class="alert alert-info alert-dismissable">
+                                      <span class="pficon pficon-info"></span>
+                                      Awaiting order to be placed
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h4 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion-markup" href="">
+                                    Order shipped
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapseTwo" class="panel-collapse collapse in">
+                                <div ng-if="milestones.get('Milestone 2: Order shipped') != null">
+                                    
+                                    <div class="alert alert-success alert-dismissable">                               
+                                      <span class="pficon pficon-ok"></span>
+                                      Order has been shipped.<br>
+                                      Completed at  {{milestones.get('Milestone 2: Order shipped') | date:'dd.MM.yyyy HH:mm:ss'}}
+                                    </div>                                 
+                                </div>
+                                <div ng-if="milestones.get('Milestone 2: Order shipped') == null">                                
+                                    <div class="alert alert-info alert-dismissable">
+                                      <span class="pficon pficon-info"></span>
+                                      Awaiting order shippment
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading">
+                                <h4 class="panel-title">
+                                  <a data-toggle="collapse" data-parent="#accordion-markup" href="">
+                                    Order delivered
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapseThree" class="panel-collapse collapse in">
+                                <div ng-if="milestones.get('Milestone 3: Delivered to customer') != null">
+                                    
+                                    <div class="alert alert-success alert-dismissable">                               
+                                      <span class="pficon pficon-ok"></span>
+                                      Order has been delivered.<br>
+                                      Completed at  {{milestones.get('Milestone 3: Delivered to customer') | date:'dd.MM.yyyy HH:mm:ss'}}
+                                    </div>                                 
+                                </div>
+                                <div ng-if="milestones.get('Milestone 3: Delivered to customer') == null">                                
+                                    <div class="alert alert-info alert-dismissable">
+                                      <span class="pficon pficon-info"></span>
+                                      Awaiting order delivery
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <div class="row">
+                      <div class="panel panel-default">
+                        <div class="panel-body" style="height:400px">
+                            <ul class="nav nav-tabs">
+                              <li class="active"><a href="" data-toggle="tab" data-target="#hardware">Hardware specification</a></li>
+                              <li><a href="" data-toggle="tab" data-target="#comments" ng-click="showComments()">Comments</a></li>
+                              <li><a href="" data-toggle="tab" data-target="#mytasks" ng-click="showTasks()">My tasks</a></li>
+                            </ul>
+
+                            <div id="my-tab-content" class="tab-content">
+                                <div class="tab-pane active" id="hardware">
+                                    <div ng-include ="'modules/order/views/show-hardware-spec.html'"></div>
+                                </div>
+                                <div class="tab-pane" id="comments">
+                                    <div ng-include ="'modules/order/views/show-comments.html'"></div>
+                                </div>
+                                <div class="tab-pane" id="mytasks">
+                                    <div ng-include ="'modules/order/views/show-tasks.html'"></div>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3">
+                      <div class="row">
+                       <div class="panel-group pull-right" id="involvements" style="width:90%">
+                        <div class="panel panel-default">
+                          <div class="panel-heading">Involved</div>
+                          <div class="panel-body">
+                              <ul class="list-group">
+                                  <li class="list-group-item" ng-repeat="role in order['case-roles']">
+                                       <b>{{ role.name }}</b>
+                                       <div ng-if="role.users.length > 0">
+                                           <ul class="list-group">
+                                               <li class="list-group-item" ng-repeat="user in role.users">
+                                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                                {{ user }}
+                                            </li>
+                                            </ul>
+                                       </div>
+                                       <div ng-if="role.groups.length > 0">
+                                         <ul class="list-group">
+                                             <li class="list-group-item" ng-repeat="group in role.groups">
+                                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                                                  {{ group }}
+                                             </li>
+                                           </ul>
+                                       </div>
+                                  </li>
+                                </ul>
+                          </div>
+                        </div>
+                    </div>
+                      </div>
+                  </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1 sidebar-pf sidebar-pf-right full-height" data-field="side-bar-right"></div>
+    </div>
+</div>

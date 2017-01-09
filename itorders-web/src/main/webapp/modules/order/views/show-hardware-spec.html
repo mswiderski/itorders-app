@@ -1,0 +1,46 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Hardware specification for {{order['case-id']}}</h2>
+
+            <div ng-if="hardwareSpec != null">
+                <div class="alert alert-success alert-dismissable">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                    <span class="pficon pficon-close"></span>
+                  </button>
+                  <span class="pficon pficon-ok"></span>
+                  <strong>Hardware specification is available!</strong></a>.
+                </div>
+                <ul class="list-group">
+                    <li class="list-group-item">
+                     <b>Name</b>
+                     {{ hardwareSpec.name }}
+                    </li>
+                    <li class="list-group-item">
+                     <b>Size</b>
+                     {{ hardwareSpec.size/1000 }} KB
+                    </li>
+                    <li class="list-group-item">
+                    <a href="{{downloadLink}}">
+                         <b>Download</b>
+                         <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                     </a>
+                    </li>
+                    <li class="list-group-item">
+                     <b>Supplier comment</b>
+                     {{ supplierComment }}
+                    </li>
+                 </ul>
+            </div>
+            <div ng-if="hardwareSpec == null">
+                <div class="alert alert-info">
+                  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                    <span class="pficon pficon-close"></span>
+                  </button>
+                  <span class="pficon pficon-info"></span>
+                  <strong>Hardware specification has not yet been provided.</strong> Check later or contact <a href="#" class="alert-link">supplier</a>.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<header ng-include src="'modules/home/views/menu.html'">
+</header>
+<div class="container-fluid">
+<div class="row toolbar-pf">
+  <div class="col-sm-12">
+      <div class="row toolbar-pf-results">
+        <div class="col-sm-12">
+          <h5>{{tasks.length}} Results</h5>
+          <p>Active filters:</p>
+          <ul class="list-inline">
+            <li>
+              <span class="label label-info">
+                Name: nameofthething
+                <a href="#"><span class="pficon pficon-close"></span></a>
+              </span>
+            </li>
+            <li>
+              <span class="label label-info">
+                Name: nameofthething
+                <a href="#"><span class="pficon pficon-close"></span></a>
+              </span>
+            </li>
+            <li>
+              <span class="label label-info">
+                Name: nameofthething
+                <a href="#"><span class="pficon pficon-close"></span></a>
+              </span>
+            </li>
+          </ul>
+          <p><a href="#">Clear All Filters</a></p>
+        </div><!-- /col -->
+      </div><!-- /row -->
+  </div><!-- /col -->
+</div><!-- /row -->
+</div><!-- /container -->
+
+<div class="container-fluid">
+<div class="list-group list-view-pf list-view-pf-view">
+<div class="list-group-item" ng-repeat="task in tasks">
+<div class="list-view-pf-checkbox">
+  <input type="checkbox">
+</div>
+<div class="list-view-pf-actions">
+  <div ng-if="task['task-status'] == 'Ready'">
+    <button class="btn btn-default" ng-click="go('/placeorder/' + task['task-id'])">Place an order</button>
+  </div>
+  <div ng-if="task['task-status'] == 'Reserved' || task['task-status'] == 'InProgress'">
+    <button class="btn btn-default" ng-click="go('/placeorder/' + task['task-id'])">Continue</button>
+  </div>
+</div>
+<div class="list-view-pf-main-info">
+  <div class="list-view-pf-left">
+    <span class="fa fa-magic list-view-pf-icon-sm"></span>
+  </div>
+  <div class="list-view-pf-body">
+    <div class="list-view-pf-description">
+      <div class="list-group-item-heading">
+        {{ task['task-name'] }}
+      </div>
+      <div class="list-group-item-text">
+        {{ task['task-description'] }}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+</div>
+</div>
+<div class="container-fluid pull-right">
+    <ul class="pager">
+      <li class="previous" style="{{prevButtonStyle}}">
+        <a href="" ng-click="prevPage()">
+          <span class="i fa fa-angle-left"></span>
+          Previous
+        </a>
+      </li>
+      <li class="next" style="{{nextButtonStyle}}">
+        <a href="" ng-click="nextPage()">
+          Next
+          <span class="i fa fa-angle-right"></span>
+        </a>
+      </li>
+    </ul>
+</div>

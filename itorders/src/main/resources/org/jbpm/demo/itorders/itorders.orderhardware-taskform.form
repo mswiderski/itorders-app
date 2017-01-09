@@ -1,0 +1,22 @@
+
+<form id="2114374562">
+<property name="name" value="itorders.orderhardware-taskform.form"/>
+<property name="displayMode" value="default"/>
+<property name="status" value="0"/>
+<field position="0" name="approved" type="CheckBox" id="744674020">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;approved (approved)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="approved"/>
+<property name="fieldClass" value="java.lang.Boolean"/>
+</field>
+<field position="1" name="caseFile_hwSpec" type="Document" id="1729677905">
+<property name="fieldRequired" value="false"/>
+<property name="label" value="quot;enquot;,quot;caseFile_hwSpec (caseFile_hwSpec)quot;"/>
+<property name="readonly" value="false"/>
+<property name="outputBinding" value="caseFile_hwSpec"/>
+<property name="fieldClass" value="org.jbpm.document.Document"/>
+</field>
+<dataHolder inputId="" name="#E9E371" type="basicType" outId="approved" value="java.lang.Boolean" id="approved"/>
+<dataHolder inputId="" name="#FF54A7" type="basicType" outId="caseFile_hwSpec" value="org.jbpm.document.Document" id="caseFile_hwSpec"/>
+</form>

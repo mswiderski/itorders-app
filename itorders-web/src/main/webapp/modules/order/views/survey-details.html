@@ -1,0 +1,47 @@
+<header ng-include src="'modules/home/views/menu.html'">
+</header>
+<div>
+    <div class="jumbotron">
+
+        <div class="container">
+            <div class="alert alert-danger" ng-show="data.error.code">
+                {{data.error.message}}
+            </div>
+
+            <div class="panel panel-default" ng-hide="data.error.code || data.result">
+                <div class="panel-heading">
+                    <h3>IT hardware delivery satisfaction survey for order {{task['task-input-data']['orderNumber']}}</h3>
+                </div>
+                <form name="createApplicationForm" novalidate="true">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Requestor name</label>
+                            {{task['task-input-data']['requestor']}}
+                        </div>
+                        <div class="form-group">
+                            <label>Are you satisfied?</label>
+                            <input type="checkbox" class="form-control" ng-model="survey.satisfied" ng-true-value="'true'" ng-false-value="'false'" />
+                        </div>
+                        <div class="form-group">
+                            <label>Hardware delivered on time?</label>
+                            <input type="checkbox" class="form-control" ng-model="survey.deliveredOnTime" ng-true-value="'true'" ng-false-value="'false'" />
+                        </div>
+                        <div class="form-group">
+                            <label>Missing equipment</label>
+                            <input class="form-control" ng-model="survey.missingEquipment" />
+                        </div>                        
+                        <div class="form-group">
+                            <label>Tell us how we can improve our service</label>
+                            <textarea rows="6" class="form-control" ng-model="survey.comment" ></textarea>
+                        </div>                        
+                        <div class="form-group">
+                            <hr/>
+                            <button type="submit" class="btn btn-primary" ng-click="completeSurvey()">Complete</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

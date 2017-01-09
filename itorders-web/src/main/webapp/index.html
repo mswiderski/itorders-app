@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app="OrderITApplication">
+
+<head>
+	<!-- PatternFly Styles -->
+	<link href="bower_components/patternfly/dist/css/patternfly.min.css" rel="stylesheet" media="screen, print">
+	<link href="bower_components/patternfly/dist/css/patternfly-additions.min.css" rel="stylesheet" media="screen, print">
+	<title>Order IT hardware</title>
+</head>
+<body id="app-body">
+
+	<div ng-view></div>
+
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/angular-route/angular-route.js"></script>
+	<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+	<!-- jQuery -->
+	<script src="bower_components/jquery/dist/jquery.min.js"></script>
+	<!-- Bootstrap -->
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+	<!-- PatternFly -->
+	<script src="bower_components/patternfly/dist/js/patternfly.min.js"></script>
+
+	<script src="scripts/configuration.js"></script>
+	<script src="scripts/app.js"></script>
+    <script src="modules/authentication/services.js"></script>
+    <script src="modules/authentication/controllers.js"></script>
+    <script src="modules/home/controllers.js"></script>
+
+    <script src="modules/cases/services.js"></script>
+    <script src="modules/cases/controllers.js"></script>
+
+    <script src="modules/order/services.js"></script>
+    <script src="modules/order/controllers.js"></script>
+
+	<script src="modules/supplier/services.js"></script>
+    <script src="modules/supplier/controllers.js"></script>
+
+	<script src="modules/manager/services.js"></script>
+    <script src="modules/manager/controllers.js"></script>
+
+</body>
+</html>

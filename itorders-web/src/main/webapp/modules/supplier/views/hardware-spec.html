@@ -1,0 +1,46 @@
+<header ng-include src="'modules/home/views/menu.html'">
+</header>
+<div>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2>Hardware specification for order {{task['task-input-data']['orderNumber']}}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="alert alert-danger" ng-show="data.error.code">
+                {{data.error.message}}
+            </div>
+
+            <div class="panel panel-default" ng-hide="data.error.code || data.result">
+                <div class="panel-heading">
+                    <h3>Hardware specification Form</h3>
+                </div>
+                <form name="createApplicationForm" novalidate="true">
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label>Requestor name</label>
+                            {{task['task-input-data']['requestor']}}
+                        </div>
+                        <div class="form-group">
+                            <label>Comment</label>
+                            <textarea rows="6" class="form-control" ng-model="hardwareSpec.comment" ></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Hardware specification attachment</label>
+                            <input type="file" id="file" name="file"/>
+
+                        </div>
+                        <div class="form-group">
+                            <hr/>
+                            <button type="submit" class="btn btn-primary" ng-click="complete()">Complete</button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
