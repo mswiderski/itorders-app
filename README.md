@@ -15,7 +15,7 @@ How to run it
 Application by default runs with H2 in memory data base but can be reconfigured to use other dbs like PostrgeSQL or MySQL.
 
 1. clone this repository
-2. build with maven (mvl clean install) on the root of cloned repo
+2. build with maven (mvn clean install) on the root of cloned repo
 3. go into itorders-web
 4. start WildFly Swarm with:
 
