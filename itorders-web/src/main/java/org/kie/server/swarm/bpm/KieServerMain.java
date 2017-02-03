@@ -78,6 +78,7 @@ public class KieServerMain {
         
         deployment.addAsWebInfResource(new File(configFolder + "/web/web.xml"), "web.xml");
         deployment.addAsWebInfResource(new File(configFolder + "/web/jboss-web.xml"), "jboss-web.xml");
+        deployment.addAsResource(new File(configFolder + "/cases/case-authorization.properties"), "case-authorization.properties");
         
                 
         return deployment;

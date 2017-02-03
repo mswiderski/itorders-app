@@ -184,12 +184,12 @@ angular.module('Orders')
 
             $http({method: 'DELETE', url: serverUrl + "/containers/itorders/cases/instances/" + orderNumber}).
                     success(function(status, headers, config) {
-
-                        callback(true);
+                    	var response = { success: true};
+                        callback(response);
                     }).
                     error(function(data, status, headers, config) {
-
-                        var response = { success: false, message : status};
+                    	
+                        var response = { success: false, message : "" + data};
                         callback(response);
                     });
         };

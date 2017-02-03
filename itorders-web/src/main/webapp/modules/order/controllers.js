@@ -298,6 +298,7 @@ angular.module('Orders')
                 $scope.nextButtonStyle = "";
                 $scope.commentText = "";
                 $scope.orderNumber = "";
+                $scope.errorMessage = null;
 
                 OrderService.GetInstance(appConfig.get('kieserver_url'), $routeParams.orderNumber, function (response) {
 
@@ -469,11 +470,10 @@ angular.module('Orders')
 
                     OrderService.CloseCase(appConfig.get('kieserver_url'), orderNumber, function (response) {
 
-                        if (response) {
+                        if (response.success) {
                             $location.path('/listorders');
                         } else {
-                            $scope.error = response.message;
-                            $scope.dataLoading = false;
+                            $scope.errorMessage = response.message;                            
                         }
                     });
                 }

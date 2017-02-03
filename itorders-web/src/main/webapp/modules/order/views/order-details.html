@@ -16,6 +16,17 @@
                         <hr/>
                     </div>
                 </div>
+                <div class="row" ng-if="errorMessage != null">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger alert-dismissable">
+						  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+						    <span class="pficon pficon-close"></span>
+						  </button>
+						  <span class="pficon pficon-error-circle-o"></span>
+						  <strong>Hey there is a problem!</strong><br/>{{errorMessage}}
+						</div>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" class="col-md-1 btn btn-danger pull-right title-action" ng-click="closeOrder(order['case-id'])">Close</button>
