@@ -104,9 +104,9 @@ angular.module('Orders')
                     }).
                     error(function(data, status, headers, config) {
 
-                        var response = { success: false, message : status};
+                        var response = { success: false, message : "" + data};
                         callback(response);
-                    });
+                    });    
         };
 
         service.addComment = function (serverUrl, orderNumber, commentText, callback) {

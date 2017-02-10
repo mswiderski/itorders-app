@@ -353,8 +353,7 @@ angular.module('Orders')
                         if (response.success) {
                             $scope.comments = response.data;
                         } else {
-                            $scope.error = response.message;
-                            $scope.dataLoading = false;
+                            $scope.errorMessageComment = response.message;
                         }
                     });
                 };
