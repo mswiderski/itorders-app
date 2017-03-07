@@ -1,0 +1,43 @@
+<header ng-include src="'modules/home/views/menu.html'">
+</header>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h2>Process Instance Diagrams</h2>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Select Process Instance</h3>
+        </div>
+        <div class="panel-body" style="width: 60%">
+            <form class="form-horizontal" name="initOrder" ng-submit="">
+
+                <div class="form-group ">
+                    <div class="col-sm-10">
+                        <select class="form-control" id="processInstancesInput" name="processInstancesText"
+                                ng-options="p['process-name'] + ' ( instance id:' +  p['process-instance-id'] + ' )' for p in processInstances['process-instance']"
+                                ng-model="selectedInstance"
+                                ng-change="displayProcessInstance()"
+                                required>
+                            <option value="">Process Instances</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Process Instance Diagram: {{ selectedInstance['process-name']  + ' (id: ' + selectedInstance['process-instance-id'] + ')' }}</h3>
+        </div>
+
+        <div ng-bind-html="processInstanceSVG"></div>
+
+
+    </div>
+</div>

@@ -7,6 +7,7 @@ angular.module('Cases', []);
 angular.module('Orders', []);
 angular.module('Supplier', []);
 angular.module('Manager', []);
+angular.module('InstanceDiagrams', []);
 
 angular.module('OrderITApplication', [
     'ngRoute',
@@ -16,8 +17,8 @@ angular.module('OrderITApplication', [
     'Cases',
     'Orders',
     'Supplier',
-    'Manager'
-
+    'Manager',
+    'InstanceDiagrams'
 ])
 
  .filter("asDate", function () {
@@ -87,6 +88,11 @@ angular.module('OrderITApplication', [
         .when('/hardwarespec/:taskId', {
             controller: 'HardwareSpecController',
             templateUrl: 'modules/supplier/views/hardware-spec.html'
+        })
+
+        .when('/processinstancediagrams', {
+            controller: 'InstanceDiagramsController',
+            templateUrl: 'modules/processinstancediagrams/views/processinstancediagrams.html'
         })
 
         .when('/', {
