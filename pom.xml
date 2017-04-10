@@ -7,7 +7,7 @@
   <name>IT Orders application</name>
   
     <properties>
-    <version.wildfly-swarm>2017.2.0</version.wildfly-swarm>
+    <version.wildfly-swarm>2017.4.0</version.wildfly-swarm>
     <version.org.kie>7.0.0-SNAPSHOT</version.org.kie>
 
     <version.h2>1.4.187</version.h2>
