@@ -8,109 +8,195 @@
 <div class="card-pf card-pf-view card-pf-view-select card-pf-view-single-select" ng-class="{'active': selectedType === 'apple'}" ng-click="selectType('apple')">
   <div class="card-pf-body">
     <div class="card-pf-top-element">
-      <span class="fa fa-birthday-cake card-pf-icon-circle"></span>
+      <span class="fa fa-laptop card-pf-icon-circle"></span>
     </div>
     <h2 class="card-pf-title text-center">
-      Order Apple hardware
+      <strong>Apple hardware</strong>
     </h2>
     <div class="card-pf-items text-center">
       <div class="card-pf-item">
-        <span class="pficon pficon-screen"></span>
+        <span class="pficon pficon-ok"></span>
         <span class="card-pf-item-text">Available</span>
       </div>
-      <div class="card-pf-item">
-        <span class="fa fa-check"></span>
-      </div>
-    </div>
+    </div><br>
+    <!--<div class="col-lg-12 text-center">-->
+      <!--<a class="btn btn-success btn-lg" ng-href="#/neworder" role="button" ng-click="selectType('apple')">Order</a>-->
+    <!--</div>-->
     <p class="card-pf-info text-center"><strong>Last update On</strong> {{date | date:'dd.MM.yyyy HH:mm:ss'}}</p>
   </div>
   <div class="card-pf-view-checkbox">
     <input type="checkbox">
   </div>
+
+  <div ng-controller="OrderController" ng-show="selectedType == 'apple'">
+    <form class="form-horizontal" name="initOrder" ng-submit="submitOrder()">
+      <div class="form-group">
+        <div class="col-sm-10">
+          <input type="text" id="ownerInputApple" class="form-control" value="Owner: {{ownerInput}}" ng-bind="ownerInput" readonly="true">
+        </div>
+      </div>
+      <div class="form-group ">
+        <div class="col-sm-10">
+          <select class="form-control" id="managerInputApple" name="managerText" ng-model="managerInput"  ng-options="m as m.name for m in managers" ng-model="managerInput" required>
+            <option value="">Select manager</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-success btn-lg">Order</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
 </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-<div class="card-pf card-pf-view card-pf-view-select card-pf-view-single-select"ng-class="{'active': selectedType === 'lenovo'}" ng-click="selectType('lenovo')">
+<div class="card-pf card-pf-view card-pf-view-select card-pf-view-single-select" ng-class="{'active': selectedType === 'lenovo'}" ng-click="selectType('lenovo')">
   <div class="card-pf-body">
     <div class="card-pf-top-element">
-      <span class="fa fa-birthday-cake card-pf-icon-circle"></span>
+      <span class="fa fa-laptop card-pf-icon-circle"></span>
     </div>
     <h2 class="card-pf-title text-center">
-      Order Lenovo hardware
+      <strong>Lenovo hardware</strong>
     </h2>
     <div class="card-pf-items text-center">
       <div class="card-pf-item">
-        <span class="pficon pficon-screen"></span>
+        <span class="pficon pficon-ok"></span>
         <span class="card-pf-item-text">Available</span>
       </div>
-      <div class="card-pf-item">
-        <span class="fa fa-check"></span>
-      </div>
-    </div>
+    </div><br>
+    <!--<div class="col-lg-12 text-center">-->
+      <!--<a class="btn btn-success btn-lg" ng-href="#/neworder" role="button" ng-click="selectType('lenovo')">Order</a>-->
+    <!--</div>-->
     <p class="card-pf-info text-center"><strong>Last update On</strong> {{date | date:'dd.MM.yyyy HH:mm:ss'}}</p>
   </div>
   <div class="card-pf-view-checkbox">
     <input type="checkbox">
   </div>
+
+  <div ng-controller="OrderController" ng-show="selectedType == 'lenovo'">
+    <form class="form-horizontal" name="initOrder" ng-submit="submitOrder()">
+      <div class="form-group">
+        <div class="col-sm-10">
+          <input type="text" id="ownerInputLenovo" class="form-control" value="Owner: {{ownerInput}}" ng-bind="ownerInput" readonly="true">
+        </div>
+      </div>
+      <div class="form-group ">
+        <div class="col-sm-10">
+          <select class="form-control" id="managerInputLenovo" name="managerText" ng-model="managerInput"  ng-options="m as m.name for m in managers" ng-model="managerInput" required>
+            <option value="">Select manager</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-success btn-lg">Order</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
 </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
 <div class="card-pf card-pf-view card-pf-view-select card-pf-view-single-select" ng-class="{'active': selectedType === 'dell'}" ng-click="selectType('dell')">
   <div class="card-pf-body">
     <div class="card-pf-top-element">
-      <span class="fa fa-birthday-cake card-pf-icon-circle"></span>
+      <span class="fa fa-laptop card-pf-icon-circle"></span>
     </div>
     <h2 class="card-pf-title text-center">
-      Order Dell hardware
+      <strong>Dell hardware</strong>
     </h2>
     <div class="card-pf-items text-center">
       <div class="card-pf-item">
-        <span class="pficon pficon-screen"></span>
+        <span class="pficon pficon-ok"></span>
         <span class="card-pf-item-text">Available</span>
       </div>
-      <div class="card-pf-item">
-        <span class="fa fa-check"></span>
-      </div>
-    </div>
+    </div><br>
+    <!--<div class="col-lg-12 text-center">-->
+      <!--<a class="btn btn-success btn-lg" ng-href="#/neworder" role="button" ng-click="selectType('dell')">Order</a>-->
+    <!--</div>-->
     <p class="card-pf-info text-center"><strong>Last update On</strong> {{date | date:'dd.MM.yyyy HH:mm:ss'}}</p>
   </div>
   <div class="card-pf-view-checkbox">
     <input type="checkbox">
   </div>
+
+  <div ng-controller="OrderController" ng-show="selectedType == 'dell'">
+    <form class="form-horizontal" name="initOrder" ng-submit="submitOrder()">
+      <div class="form-group">
+        <div class="col-sm-10">
+          <input type="text" id="ownerInputDell" class="form-control" value="Owner: {{ownerInput}}" ng-bind="ownerInput" readonly="true">
+        </div>
+      </div>
+      <div class="form-group ">
+        <div class="col-sm-10">
+          <select class="form-control" id="managerInputDell" name="managerText" ng-model="managerInput"  ng-options="m as m.name for m in managers" ng-model="managerInput" required>
+            <option value="">Select manager</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-success btn-lg">Order</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
 </div>
     </div>
     <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-<div class="card-pf card-pf-view card-pf-view-select card-pf-view-single-select" ng-class="{'active': selectedType === 'other'}" ng-click="selectType('other')">
+<div class="card-pf card-pf-view card-pf-view-select card-pf-view-single-select" ng-class="{'active': selectedType === 'other'}" ng-click="selectType('other');">
   <div class="card-pf-body">
     <div class="card-pf-top-element">
-      <span class="fa fa-birthday-cake card-pf-icon-circle"></span>
+      <span class="fa fa-laptop card-pf-icon-circle"></span>
     </div>
     <h2 class="card-pf-title text-center">
-      Order Other hardware
+      <strong>Other hardware</strong>
     </h2>
     <div class="card-pf-items text-center">
       <div class="card-pf-item">
-        <span class="pficon pficon-screen"></span>
+        <span class="pficon pficon-ok"></span>
         <span class="card-pf-item-text">Available</span>
       </div>
-      <div class="card-pf-item">
-        <span class="fa fa-check"></span>
-      </div>
     </div>
-    <p class="card-pf-info text-center"><strong>Last update On</strong> {{date | date:'dd.MM.yyyy HH:mm:ss'}}</p>
+    <!--<div class="col-lg-12 text-center">-->
+      <!--<a class="btn btn-success btn-lg" ng-href="#/neworder" role="button" ng-click="selectType('other')">Order</a>-->
+    <!--</div>-->
+    <p class="card-pf-info text-center"><br><strong>Last update On</strong> {{date | date:'dd.MM.yyyy HH:mm:ss'}}</p>
   </div>
   <div class="card-pf-view-checkbox">
     <input type="checkbox">
   </div>
+
+  <div ng-controller="OrderController" ng-show="selectedType == 'other'">
+  <form class="form-horizontal" name="initOrder" ng-submit="submitOrder()">
+    <div class="form-group">
+      <div class="col-sm-10">
+        <input type="text" id="ownerInputOther" class="form-control" value="Owner: {{ownerInput}}" ng-bind="ownerInput" readonly="true">
+      </div>
+    </div>
+    <div class="form-group ">
+      <div class="col-sm-10">
+        <select class="form-control" id="managerInputOther" name="managerText" ng-model="managerInput"  ng-options="m as m.name for m in managers" ng-model="managerInput" required>
+          <option value="">Select manager</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" class="btn btn-success btn-lg">Order</button>
+      </div>
+    </div>
+  </form>
+  </div>
+
 </div>
     </div>
   </div>
 </div>
-</div>
-<div class="container">
-    <div class="row">
-        <div class="col-lg-12 text-center">
-            <a class="btn btn-primary btn-lg" ng-href="#/neworder" role="button">Place an order</a>
-        </div>
-    </div>
 </div>

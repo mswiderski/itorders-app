@@ -102,8 +102,9 @@ angular.module('OrderITApplication', [
 
         .otherwise({ redirectTo: '/login' });
 }])
-.service('sharedStateService', function() {
+.service('sharedStateService', ['appConfig', function(appConfig) {
             var selectedType;
+            var index;
 
             return {
                 getSelectedType: function() {
@@ -111,9 +112,13 @@ angular.module('OrderITApplication', [
                 },
                 setSelectedType: function(value) {
                     selectedType = value;
+                    index = appConfig.get('suppliers').map(function(e) { return e.id; }).indexOf(value);
+                },
+                getIndex: function() {
+                    return index;
                 }
             };
-        })
+        }])
 .factory("appConfig", function() {
     return {
         get: function(name) {

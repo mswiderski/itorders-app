@@ -8,12 +8,12 @@ angular.module('Orders')
             $scope.user = $rootScope.globals.currentUser.username;
             $scope.ownerInput = $rootScope.globals.currentUser.username;
             $scope.suppliers = appConfig.get('suppliers');
-            var index = $scope.suppliers.map(function(e) { return e.id; }).indexOf(sharedStateService.getSelectedType());
-            $scope.supplierInput = $scope.suppliers[index];
+            //var index = $scope.suppliers.map(function(e) { return e.id; }).indexOf(sharedStateService.getSelectedType());
+            $scope.supplierInput;
             $scope.managers = appConfig.get('managers');
 
-
             $scope.submitOrder = function() {
+                $scope.supplierInput = $scope.suppliers[sharedStateService.getIndex()];
                 OrderService.initOrder(appConfig.get('kieserver_url'), $scope.ownerInput,
                     $scope.managerInput,
                     $scope.supplierInput, function (response) {

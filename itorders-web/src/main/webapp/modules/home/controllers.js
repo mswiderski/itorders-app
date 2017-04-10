@@ -15,7 +15,7 @@ angular.module('Home')
           };
 
 
-          $scope.selectType = function(type) {            
+          $scope.selectType = function(type) {
             $scope.selectedType = type;
             sharedStateService.setSelectedType(type);
           };
