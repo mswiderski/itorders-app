@@ -6,6 +6,7 @@ angular.module('Home')
     ['$scope', '$rootScope', '$location','sharedStateService',
     function ($scope, $rootScope, $location, sharedStateService) {
         $scope.user = $rootScope.globals.currentUser.username;
+        $scope.userrole = $rootScope.globals.currentUser.role;
         $scope.serverInfo = $rootScope.kieServer;
         $scope.date = new Date();
         $scope.selectedType = "";

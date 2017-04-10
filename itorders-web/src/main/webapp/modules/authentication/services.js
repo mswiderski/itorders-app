@@ -3,8 +3,8 @@
 angular.module('Authentication')
 
 .factory('AuthenticationService',
-    ['KieServerInfoService', 'Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-    function (KieServerInfoService, Base64, $http, $cookieStore, $rootScope, $timeout) {
+    ['KieServerInfoService', 'Base64', '$http', '$cookieStore', '$rootScope', '$timeout', 'appConfig',
+    function (KieServerInfoService, Base64, $http, $cookieStore, $rootScope, $timeout, $appConfig) {
         var service = {};
 
         service.Login = function (username, password, serverUrl, callback) {
@@ -32,6 +32,7 @@ angular.module('Authentication')
             $rootScope.globals = {
                 currentUser: {
                     username: username,
+                    role: this.GetRoleForUser(username),
                     authdata: authdata
                 }
             };
@@ -46,6 +47,11 @@ angular.module('Authentication')
             $rootScope.globals = {};
             $cookieStore.remove('globals');
             $http.defaults.headers.common.Authorization = 'Basic ';
+        };
+
+        service.GetRoleForUser = function(username) {
+            var userrole = $appConfig.get("roles").filter(function(item) { return item.name === username });
+            return userrole[0].value;
         };
 
         return service;

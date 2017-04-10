@@ -19,5 +19,10 @@ var application = {
       {'id': 'mary', 'name': 'Mary'},
       {'id': 'paul', 'name': 'Paul'},
       {'id': 'maciek', 'name': 'Maciek'}
-   ]
+   ],
+    "roles" : [
+        {name: "tihomir", value: "Supplier"},
+        {name: "maciek", value: "Employee"},
+        {name: "krisv", value: "Manager"}
+    ]
 };

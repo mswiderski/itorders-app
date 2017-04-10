@@ -143,4 +143,27 @@ angular.module('OrderITApplication', [
                 $location.path('modules/authentication/views/login.html');
             }
         });
+    }])
+
+    .directive('restrict', ['$rootScope', function($rootScope){
+        return {
+            restrict: 'A',
+            prioriry: 100000,
+            scope: false,
+            link: function(){
+            },
+            compile:  function(element, attr, linker){
+                var accessDenied = true;
+                var userrole = $rootScope.globals.currentUser.role;
+
+                if(attr.access == userrole) {
+                    accessDenied = false;
+                }
+                if(accessDenied){
+                    element.children().remove();
+                    element.remove();
+                }
+
+            }
+        }
     }]);
