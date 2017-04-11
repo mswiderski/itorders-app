@@ -12,6 +12,7 @@ angular.module('InstanceDiagrams', []);
 angular.module('OrderITApplication', [
     'ngRoute',
     'ngCookies',
+    'angularModalService',
     'Authentication',
     'Home',
     'Cases',

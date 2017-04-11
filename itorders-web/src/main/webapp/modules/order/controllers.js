@@ -3,8 +3,8 @@
 angular.module('Orders')
 
 .controller('OrderController',
-    ['$scope', '$rootScope', '$location', 'OrderService', 'sharedStateService', 'appConfig',
-        function ($scope, $rootScope, $location, OrderService, sharedStateService, appConfig) {
+    ['$scope', '$rootScope', '$location', 'OrderService', 'sharedStateService', 'appConfig', 'ModalService',
+        function ($scope, $rootScope, $location, OrderService, sharedStateService, appConfig, ModalService) {
             $scope.user = $rootScope.globals.currentUser.username;
             $scope.ownerInput = $rootScope.globals.currentUser.username;
             $scope.suppliers = appConfig.get('suppliers');
@@ -26,7 +26,15 @@ angular.module('Orders')
                             if (response.success) {
                                 $rootScope.order = response2.data;
 
-                                $location.path('/orderconfirmation');
+                                ModalService.showModal({
+                                    templateUrl: "modules/order/views/order-confirmation-modal.html",
+                                    controller: "SimpleModalController"
+                                }).then(function(modal) {
+                                    modal.element.modal();
+                                    modal.close.then(function(result) {
+                                        $location.path('/listmyorders');
+                                    });
+                                });
                             } else {
                                 $scope.error = response.message;
                                 $scope.dataLoading = false;
@@ -543,4 +551,13 @@ angular.module('Orders')
                         }
                     });
                 }
-        }]);
+        }])
+
+
+    .controller('SimpleModalController', ['$scope', 'close', function($scope, close) {
+
+        $scope.close = function(result) {
+            close(result, 500);
+        };
+
+    }]);
