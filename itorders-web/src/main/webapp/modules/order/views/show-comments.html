@@ -1,5 +1,5 @@
-<div class="row" ng-if="errorMessageComment != null">
-	<div class="col-md-12">
+<div ng-if="errorMessageComment != null">
+	<div>
 		<div class="alert alert-danger alert-dismissable">
 			<button type="button" class="close" data-dismiss="alert"
 				aria-hidden="true">
@@ -10,63 +10,43 @@
 		</div>
 	</div>
 </div>
-<div class="row" ng-if="errorMessageComment == null">
-<div class="container-fluid">
-	<div class="row toolbar-pf">
-		<div class="col-sm-12">
-			<div class="row toolbar-pf-results">
-				<div class="col-sm-12">
-					<h5>{{tasks.length}} Results</h5>
-					<p>Active filters:</p>
-					<ul class="list-inline">
-						<li><span class="label label-info"> Name:
-								nameofthething <a href=""><span class="pficon pficon-close"></span></a>
-						</span></li>
-					</ul>
-					<p>
-						<a href="">Clear All Filters</a>
-					</p>
-					<div class="pull-right">
-						<button class="btn btn-default" type="button" data-toggle="modal"
-							data-target="#addCommentModalDetails"
-							ng-click="selected(order['case-id'])">Add comment</button>
-					</div>
-				</div>
-				<!-- /col -->
-			</div>
-			<!-- /row -->
+<div ng-if="errorMessageComment == null">
+	<p><div class="container-fluid center-block">
+		<button class="btn btn-success" type="button" data-toggle="modal"
+		data-target="#addCommentModalDetails"
+		ng-click="selected(order['case-id'])">Add New Comment</button>
 		</div>
-		<!-- /col -->
-	</div>
-	<!-- /row -->
-</div>
-<!-- /container -->
+	</div></p>
 
-<div class="container-fluid">
-	<div class="list-group list-view-pf list-view-pf-view">
-		<div class="list-group-item" ng-repeat="comment in comments">
-			<div class="list-view-pf-actions">
-				<button class="btn btn-default" data-toggle="modal"
-					data-target="#editCommentModalDetails"
-					ng-click="editComment(order['case-id'], comment)">Edit</button>
-				<button class="btn btn-danger"
-					ng-click="deleteComment(order['case-id'], comment['id'])">Delete</button>
-			</div>
-			<div class="list-view-pf-main-info">
-				<div class="list-view-pf-left">
-					<span class="fa fa-magic list-view-pf-icon-sm"></span>
-				</div>
-				<div class="list-view-pf-body">
-					<div class="list-view-pf-description">
-						<div class="list-group-item-heading">Author {{
-							comment['author'] }}</div>
-						<div class="list-group-item-text">{{ comment['text'] }}</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
+	<p><div class="container-fluid center-block">
+		<table class="table table-striped">
+			<thead>
+			<tr>
+				<th>#</th>
+				<th>Author</th>
+				<th>Comment</th>
+				<th>Actions</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr ng-repeat="comment in comments">
+				<td> {{$index + 1}} </td>
+				<td>{{ comment['author'] }}</td>
+				<td>{{ comment['text'] }}</td>
+				<td>
+
+						<button class="btn btn-primary" data-toggle="modal"
+								data-target="#editCommentModalDetails"
+								ng-click="editComment(order['case-id'], comment)">Edit</button>
+						<button class="btn btn-danger"
+								ng-click="deleteComment(order['case-id'], comment['id'])">Delete</button>
+
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div></p>
+
 
 <div class="modal fade" id="addCommentModalDetails" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

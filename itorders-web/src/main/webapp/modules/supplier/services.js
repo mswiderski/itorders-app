@@ -106,11 +106,11 @@ angular.module('Supplier')
             },
             data : data}).
                     success(function(status, headers, config) {
+
                         callback(true);
 
                     }).
                     error(function(data, status, headers, config) {
-
                         console.error("Error when claiming task " + taskId + " status code " + status + " data " + data);
                     });
                 };

@@ -63,8 +63,10 @@ angular.module('Orders')
             }
     }])
 .controller('ListOrdersController',
-        ['$scope', '$rootScope', '$location', 'OrderService', 'appConfig',
-            function ($scope, $rootScope, $location, OrderService, appConfig) {
+        ['$scope', '$rootScope', '$location', 'OrderService', 'appConfig', 'Page',
+            function ($scope, $rootScope, $location, OrderService, appConfig, Page) {
+                $scope.Page = Page;
+                $scope.Page.setTitle("Hardware Orders");
                 $scope.user = $rootScope.globals.currentUser.username;
                 $scope.comment = "";
                 $scope.orderNumber = "";
@@ -120,6 +122,11 @@ angular.module('Orders')
 
                 $scope.selected = function(orderNumber) {
                     $scope.orderNumber = orderNumber;
+                    $scope.orderDetailsURL = "modules/order/views/order-details.html?date="+Date.now();
+                }
+
+                $scope.getSelected = function() {
+                    return $scope.orderNumber;
                 }
 
                 $scope.goWithSelected = function (orderNumber, path ) {
@@ -164,10 +171,12 @@ angular.module('Orders')
         }])
         
 .controller('OrderSurveyController',
-    ['$scope', '$rootScope', '$routeParams', '$location', 'OrderService', 'sharedStateService', 'appConfig',
-        function ($scope, $rootScope, $routeParams, $location, OrderService, sharedStateService, appConfig) {
+    ['$scope', '$rootScope', '$routeParams', '$location', 'OrderService', 'sharedStateService', 'appConfig', 'Page',
+        function ($scope, $rootScope, $routeParams, $location, OrderService, sharedStateService, appConfig, Page) {
             $scope.user = $rootScope.globals.currentUser.username;     
             $scope.survey = {};
+            $scope.Page = Page;
+            $scope.Page.setTitle("Delivery Satisfaction Survey");
             
             OrderService.ClaimAndGetTask(appConfig.get('kieserver_url'), $routeParams.surveyId, function (response) {
 
@@ -186,7 +195,8 @@ angular.module('Orders')
             	OrderService.CompleteSurvey(appConfig.get('kieserver_url'), $scope.task['task-id'], $scope.survey, function (response) {
 
                     if (response) {
-                        $location.path('/orders/' + $scope.task['task-input-data']['orderNumber']);
+                        //$location.path('/orders/' + $scope.task['task-input-data']['orderNumber']);
+                        $location.path('/listmyorders');
                     } else {
                         $scope.error = response.message;
                         $scope.dataLoading = false;
@@ -196,8 +206,10 @@ angular.module('Orders')
     }]) 
     
 .controller('ListMyOrdersController',
-        ['$scope', '$rootScope', '$location', 'OrderService', 'appConfig',
-            function ($scope, $rootScope, $location, OrderService, appConfig) {
+        ['$scope', '$rootScope', '$location', 'OrderService', 'appConfig', 'Page',
+            function ($scope, $rootScope, $location, OrderService, appConfig, Page) {
+                $scope.Page = Page;
+                $scope.Page.setTitle("My Hardware Orders");
                 $scope.user = $rootScope.globals.currentUser.username;
                 $scope.comment = "";
                 $scope.orderNumber = "";
@@ -253,6 +265,11 @@ angular.module('Orders')
 
                 $scope.selected = function(orderNumber) {
                     $scope.orderNumber = orderNumber;
+                    $scope.orderDetailsURL = "modules/order/views/order-details.html?date="+Date.now();
+                }
+
+                $scope.getSelected = function() {
+                    return $scope.orderNumber;
                 }
 
                 $scope.goWithSelected = function (orderNumber, path ) {
@@ -297,8 +314,8 @@ angular.module('Orders')
         }])    
         
 .controller('OrderDetailsController',
-        ['$scope', '$rootScope', '$routeParams', '$location', 'OrderService', 'appConfig',
-            function ($scope, $rootScope, $routeParams, $location, OrderService, appConfig) {
+        ['$scope', '$rootScope', '$route', '$routeParams', '$location', 'OrderService', 'appConfig',
+            function ($scope, $rootScope, $route, $routeParams, $location, OrderService, appConfig) {
                 $scope.user = $rootScope.globals.currentUser.username;
                 $scope.page = 0;
                 $scope.pageSize = appConfig.get('page_size');
@@ -308,8 +325,7 @@ angular.module('Orders')
                 $scope.orderNumber = "";
                 $scope.errorMessage = null;
 
-                OrderService.GetInstance(appConfig.get('kieserver_url'), $routeParams.orderNumber, function (response) {
-
+                $scope.initOrderService = function() {OrderService.GetInstance(appConfig.get('kieserver_url'), $scope.orderNumber, function (response) {
                     if (response.success) {
                         $scope.order = response.data;
                         if ($scope.order['case-file'] != null && $scope.order['case-file']['case-data']['hwSpec'] != null) {
@@ -326,7 +342,7 @@ angular.module('Orders')
                             $scope.managerComment = $scope.order['case-file']['case-data']['managerComment'];
                         }
                         
-                        OrderService.GetMilestonesForOrder(appConfig.get('kieserver_url'), $routeParams.orderNumber, function (response) {
+                        OrderService.GetMilestonesForOrder(appConfig.get('kieserver_url'), $scope.orderNumber, function (response) {
 
                             if (response.success) {
                                 
@@ -335,7 +351,7 @@ angular.module('Orders')
                                 	$scope.milestones.set(mi['milestone-name'], mi['milestone-achieved-at'])  
                                } );
                                 
-                                $location.path('/orders/'+$routeParams.orderNumber);
+                                //$location.path('/orders/'+$routeParams.orderNumber);
                             } else {
                                 $scope.error = response.message;
                                 $scope.dataLoading = false;
@@ -345,7 +361,7 @@ angular.module('Orders')
                         $scope.error = response.message;
                         $scope.dataLoading = false;
                     }
-                });
+                })};
 
                 $scope.milestoneClass = function(milestone) {
                     if (milestone['milestone-achieved'] == true) {
@@ -419,6 +435,7 @@ angular.module('Orders')
                 $scope.selected = function(orderNumber) {
                     $scope.orderNumber = orderNumber;
                     $scope.newcomment = {};
+                    $scope.initOrderService();
                 }
                 
                 $scope.go = function ( path, taskId ) {
@@ -478,7 +495,8 @@ angular.module('Orders')
                     OrderService.CloseCase(appConfig.get('kieserver_url'), orderNumber, function (response) {
 
                         if (response.success) {
-                            $location.path('/listorders');
+                            //$location.path('/listorders');
+                            $route.reload();
                         } else {
                             $scope.errorMessage = response.message;                            
                         }
@@ -490,7 +508,7 @@ angular.module('Orders')
                     OrderService.PutCaseData(appConfig.get('kieserver_url'), orderNumber, "shipped", true, function (response) {
 
                         if (response) {
-                        	OrderService.GetMilestonesForOrder(appConfig.get('kieserver_url'), $routeParams.orderNumber, function (response) {
+                        	OrderService.GetMilestonesForOrder(appConfig.get('kieserver_url'), $scope.orderNumber, function (response) {
 
                                 if (response.success) {
                                     
@@ -499,7 +517,7 @@ angular.module('Orders')
                                     	$scope.milestones.set(mi['milestone-name'], mi['milestone-achieved-at'])  
                                    } );
                                     
-                                    $location.path('/orders/'+$routeParams.orderNumber);
+                                    //$location.path('/orders/'+$routeParams.orderNumber);
                                 } else {
                                     $scope.error = response.message;
                                     $scope.dataLoading = false;
@@ -517,7 +535,7 @@ angular.module('Orders')
                     OrderService.PutCaseData(appConfig.get('kieserver_url'), orderNumber, "delivered", true, function (response) {
 
                         if (response) {
-                        	OrderService.GetMilestonesForOrder(appConfig.get('kieserver_url'), $routeParams.orderNumber, function (response) {
+                        	OrderService.GetMilestonesForOrder(appConfig.get('kieserver_url'), $scope.orderNumber, function (response) {
 
                                 if (response.success) {
                                     
@@ -526,7 +544,7 @@ angular.module('Orders')
                                     	$scope.milestones.set(mi['milestone-name'], mi['milestone-achieved-at'])  
                                    } );
                                     
-                                    $location.path('/orders/'+$routeParams.orderNumber);
+                                    //$location.path('/orders/'+$routeParams.orderNumber);
                                 } else {
                                     $scope.error = response.message;
                                     $scope.dataLoading = false;
@@ -540,11 +558,11 @@ angular.module('Orders')
                 }
                 
                 $scope.requestManagerApproval = function(orderNumber) {
-
                     OrderService.requestManagerApproval(appConfig.get('kieserver_url'), $scope.user, orderNumber, function (response) {
 
                         if (response) {
-                        	$location.path('/orders/'+$routeParams.orderNumber);
+                        	//$location.path('/orders/'+$routeParams.orderNumber);
+                            $route.reload();
                         } else {
                             $scope.error = response.message;
                             $scope.dataLoading = false;

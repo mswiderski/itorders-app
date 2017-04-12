@@ -1,14 +1,9 @@
-<header ng-include src="'modules/home/views/menu.html'">
-</header>
+<div class="panel panel-info">
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>{{ task['task-description'] }}</strong></h1>
+    </div>
 <div>
     <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h2>{{ task['task-description'] }}</h2>
-                </div>
-            </div>
-        </div>
         <div class="container">
             <div class="alert alert-danger" ng-show="data.error.code">
                 {{data.error.message}}
@@ -68,4 +63,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

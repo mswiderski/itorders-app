@@ -28,6 +28,12 @@ angular.module('OrderITApplication', [
         }
     })
 
+    .filter('capitalize', function() {
+        return function(input) {
+            return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+        }
+    })
+
 .config(['$routeProvider', function ($routeProvider) {
 
     $routeProvider
@@ -135,10 +141,12 @@ angular.module('OrderITApplication', [
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
 
+        $rootScope.currentLocaton = $location.path();
 
         $http.defaults.headers.common['Accept'] = 'application/json';
         $http.defaults.headers.common['Content-Type'] = 'application/json';
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            $rootScope.currentLocaton = $location.path();
             // redirect to login page if not logged in
             if ($location.path() !== '/login' && !$rootScope.globals.currentUser) {
                 $location.path('modules/authentication/views/login.html');
@@ -167,4 +175,35 @@ angular.module('OrderITApplication', [
 
             }
         }
-    }]);
+    }])
+
+    .directive('excludeForLocation', ['$rootScope', '$location', function($rootScope, $location){
+        return {
+            restrict: 'A',
+            prioriry: 100000,
+            scope: false,
+            link: function(){
+            },
+            compile:  function(element, attr, linker){
+                var accessDenied = true;
+                var location = $location.path();
+
+                if(attr.url != location) {
+                    accessDenied = false;
+                }
+                if(accessDenied){
+                    element.children().remove();
+                    element.remove();
+                }
+
+            }
+        }
+    }])
+
+    .factory('Page', function(){
+        var title = 'Home';
+        return {
+            title: function() { return title; },
+            setTitle: function(newTitle) { title = newTitle; }
+        };
+    });

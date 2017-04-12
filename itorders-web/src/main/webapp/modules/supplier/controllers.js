@@ -2,13 +2,16 @@
 
 angular.module('Supplier')
 .controller('SupplierTaskController',
-    ['$scope', '$rootScope', '$location', 'SupplierService', 'sharedStateService', 'appConfig',
-        function ($scope, $rootScope, $location, SupplierService, sharedStateService, appConfig) {
+    ['$scope', '$rootScope', '$location', 'SupplierService', 'sharedStateService', 'appConfig', 'Page',
+        function ($scope, $rootScope, $location, SupplierService, sharedStateService, appConfig, Page) {
             $scope.user = $rootScope.globals.currentUser.username;
             $scope.page = 0;
             $scope.pageSize = appConfig.get('page_size');
             $scope.prevButtonStyle = "display:none";
             $scope.nextButtonStyle = "";
+
+            $scope.Page = Page;
+            $scope.Page.setTitle("Pending Tasks");
 
             $scope.go = function ( path ) {
                 $location.path( path );
@@ -61,15 +64,26 @@ angular.module('Supplier')
                 });
             };
 
+            $scope.selected = function(taskid) {
+                $scope.selectedtaskid = taskid;
+                $scope.taskDetailsURL = "modules/supplier/views/hardware-spec.html?date="+Date.now();
+            };
+
+            $scope.getSelected = function() {
+                return $scope.selectedtaskid;
+            };
+
     }])
 .controller('SupplierOrderTaskController',
-    ['$scope', '$rootScope', '$location', 'SupplierService', 'sharedStateService', 'appConfig',
-        function ($scope, $rootScope, $location, SupplierService, sharedStateService, appConfig) {
+    ['$scope', '$rootScope', '$location', 'SupplierService', 'sharedStateService', 'appConfig', 'Page',
+        function ($scope, $rootScope, $location, SupplierService, sharedStateService, appConfig, Page) {
             $scope.user = $rootScope.globals.currentUser.username;
             $scope.page = 0;
             $scope.pageSize = appConfig.get('page_size');
             $scope.prevButtonStyle = "display:none";
             $scope.nextButtonStyle = "";
+            $scope.Page = Page;
+            $scope.Page.setTitle("Orders to be placed");
 
             $scope.go = function ( path ) {
                 $location.path( path );
@@ -122,57 +136,75 @@ angular.module('Supplier')
                 });
             };
 
+            $scope.selected = function(taskid) {
+                $scope.selectedtaskid = taskid;
+                $scope.taskDetailsURL = "modules/supplier/views/place-order.html?date="+Date.now();
+            };
+
+            $scope.getSelected = function() {
+                return $scope.selectedtaskid;
+            };
+
     }]) 
     
 .controller('SupplierOrderDetailsController',
-    ['$scope', '$rootScope', '$routeParams', '$location', 'SupplierService', 'sharedStateService', 'appConfig',
-        function ($scope, $rootScope, $routeParams, $location, SupplierService, sharedStateService, appConfig) {
-            $scope.user = $rootScope.globals.currentUser.username;     
+    ['$scope', '$route', '$rootScope', '$routeParams', '$location', 'SupplierService', 'sharedStateService', 'appConfig',
+        function ($scope, $route, $rootScope, $routeParams, $location, SupplierService, sharedStateService, appConfig) {
+            $scope.user = $rootScope.globals.currentUser.username;
             $scope.orderInfo = '';
-            
-            SupplierService.ClaimAndGetTask(appConfig.get('kieserver_url'), $routeParams.orderTaskId, function (response) {
 
-                if (response.success) {
-                	$scope.task = response.data;
-                	$scope.hardwareSpec = $scope.task['task-input-data']['_hwSpec']['org.jbpm.document.service.impl.DocumentImpl'];
-                	$scope.downloadLink = appConfig.get('kieserver_url') + "/documents/" +$scope.hardwareSpec.identifier + "/content";
-                    $location.path('/placeorder/'+ $routeParams.orderTaskId);
-                } else {
-                    $scope.error = response.message;
-                    $scope.dataLoading = false;
-                }
-            });
+            $scope.claimAndGetTask = function () {
+                SupplierService.ClaimAndGetTask(appConfig.get('kieserver_url'), $scope.orderTaskId, function (response) {
+
+                    if (response.success) {
+                        $scope.task = response.data;
+                        $scope.hardwareSpec = $scope.task['task-input-data']['_hwSpec']['org.jbpm.document.service.impl.DocumentImpl'];
+                        $scope.downloadLink = appConfig.get('kieserver_url') + "/documents/" + $scope.hardwareSpec.identifier + "/content";
+                        //$location.path('/placeorder/' + $routeParams.orderTaskId);
+                    } else {
+                        $scope.error = response.message;
+                        $scope.dataLoading = false;
+                    }
+                });
+        };
             
             $scope.placeOrder = function() {
             	
             	SupplierService.CompletePlaceOrderTask(appConfig.get('kieserver_url'), $scope.task['task-id'], $scope.orderInfo, function (response) {
 
                     if (response) {
-                        $location.path('/orderstoplace');
+                        //$location.path('/orderstoplace');
+                        $route.reload();
                     } else {
                         $scope.error = response.message;
                         $scope.dataLoading = false;
                     }
                 });
             };
+
+            $scope.selected = function(orderTaskId) {
+                $scope.orderTaskId = orderTaskId;
+                $scope.claimAndGetTask();
+            }
     }])       
     
 .controller('HardwareSpecController',
-    ['$scope', '$rootScope', '$routeParams', '$location', 'SupplierService', 'sharedStateService', 'appConfig',
-        function ($scope, $rootScope, $routeParams, $location, SupplierService, sharedStateService, appConfig) {
+    ['$scope', '$route', '$rootScope', '$routeParams', '$location', 'SupplierService', 'sharedStateService', 'appConfig',
+        function ($scope, $route, $rootScope, $routeParams, $location, SupplierService, sharedStateService, appConfig) {
             $scope.user = $rootScope.globals.currentUser.username;
             $scope.hardwareSpec = {};
             var srcData;
-            SupplierService.ClaimAndGetTask(appConfig.get('kieserver_url'), $routeParams.taskId, function (response) {
+            $scope.claimAndGetTask = function() {
+                SupplierService.ClaimAndGetTask(appConfig.get('kieserver_url'), $scope.taskId, function (response) {
 
                 if (response.success) {
                     $scope.task = response.data;
-                    $location.path('/hardwarespec/' + $routeParams.taskId);
+                    //$location.path('/hardwarespec/' + $routeParams.taskId);
                 } else {
                     $scope.error = response.message;
                     $scope.dataLoading = false;
                 }
-            });
+            })};
 
             $scope.add = function() {
               if (document.getElementById('file').files.length > 0) {
@@ -188,7 +220,8 @@ angular.module('Supplier')
                   SupplierService.CompleteTask(appConfig.get('kieserver_url'), $scope.task['task-id'], $scope.hardwareSpec, srcData, function (response) {
 
                       if (response) {
-                          $location.path('/suppliertasks');
+                          // $location.path('/suppliertasks?date=' + Date.now());
+                            $route.reload();
                       } else {
                           $scope.error = response.message;
                           $scope.dataLoading = false;
@@ -199,13 +232,19 @@ angular.module('Supplier')
             } else {
                 console.log("No file attached, just form data " + $scope.hardwareSpec.type);
             }
-           }
+           };
 
            $scope.complete = function() {
+
                $scope.add();
            };
 
            $scope.save = function() {
                $scope.add();
            };
+
+           $scope.selected = function(taskid) {
+               $scope.taskId = taskid;
+               $scope.claimAndGetTask();
+           }
     }]);

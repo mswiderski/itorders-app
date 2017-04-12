@@ -2,8 +2,8 @@
 
 angular.module('Manager')
 .controller('ManagerTaskController',
-    ['$scope', '$rootScope', '$location', 'ManagerService', 'sharedStateService', 'appConfig',
-        function ($scope, $rootScope, $location, ManagerService, sharedStateService, appConfig) {
+    ['$scope', '$rootScope', '$location', 'ManagerService', 'sharedStateService', 'appConfig', 'Page',
+        function ($scope, $rootScope, $location, ManagerService, sharedStateService, appConfig, Page) {
             $scope.user = $rootScope.globals.currentUser.username;
             $scope.orderNumber = "";
             $scope.taskId = "";
@@ -11,6 +11,8 @@ angular.module('Manager')
             $scope.pageSize = appConfig.get('page_size');
             $scope.prevButtonStyle = "display:none";
             $scope.nextButtonStyle = "";
+            $scope.Page = Page;
+            $scope.Page.setTitle("Pending Approvals");
 
             ManagerService.GetTasks(appConfig.get('kieserver_url'), $scope.page, $scope.pageSize, function (response) {
 

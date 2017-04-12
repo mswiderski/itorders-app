@@ -1,259 +1,413 @@
-<header ng-include src="'modules/home/views/menu.html'">
-</header>
+<style>
+    /** Colors **/
+    ol.progress-track {
+        display: table;
+        list-style-type: none;
+        margin: 0;
+        padding: 2em 1em;
+        table-layout: fixed;
+        width: 100%;
+    }
+    ol.progress-track li {
+        display: table-cell;
+        line-height: 3em;
+        position: relative;
+        text-align: center;
+    }
+    ol.progress-track li .icon-wrap {
+        border-radius: 50%;
+        top: -1.5em;
+        color: #fff;
+        display: block;
+        height: 2.5em;
+        margin: 0 auto -2em;
+        left: 0;
+        right: 0;
+        position: absolute;
+        width: 2.5em;
+    }
+    ol.progress-track li .icon-check-mark,
+    ol.progress-track li .icon-down-arrow {
+        height: 25px;
+        width: 15px;
+        display: inline-block;
+        fill: currentColor;
+    }
+    ol.progress-track li .progress-text {
+        position: relative;
+        top: 10px;
+    }
+    ol.progress-track li.progress-done {
+        border-top: 7px solid #87ba51;
+        transition: border-color 1s ease-in-out;
+        -webkit-transition: border-color 1s ease-in-out;
+        -moz-transition: border-color 1s ease-in-out;
+    }
+    ol.progress-track li.progress-rejected {
+        border-top: 7px solid #eb4f3b;
+        transition: border-color 1s ease-in-out;
+        -webkit-transition: border-color 1s ease-in-out;
+        -moz-transition: border-color 1s ease-in-out;
+    }
+    ol.progress-track li.progress-done .icon-down-arrow {
+        display: none;
+    }
+    ol.progress-track li.progress-rejected .icon-down-arrow {
+        display: none;
+    }
 
+    ol.progress-track li.progress-done.progress-current.progress-rejected .icon-wrap {
+        background-color: #0070c0;
+    }
+    ol.progress-track li.progress-done.progress-current.progress-rejected .icon-wrap .icon-check-mark {
+        display: none;
+    }
+    ol.progress-track li.progress-done.progress-current.progress-rejected .icon-wrap .icon-down-arrow {
+        display: block;
+    }
+    ol.progress-track li.progress-done .icon-wrap {
+        background-color: #4a6a28;
+        border: 5px solid #87ba51;
+    }
 
+    ol.progress-track li.progress-rejected .icon-wrap {
+        background-color: #b10416;
+        border: 5px solid #eb4f3b;
+    }
+    ol.progress-track li.progress-todo {
+        border-top: 7px solid #DDD;
+        color: black;
+    }
+    ol.progress-track li.progress-todo .icon-wrap {
+        background-color: #FFF;
+        border: 5px solid #DDD;
+        border-radius: 50%;
+        bottom: 1.5em;
+        color: #fff;
+        display: block;
+        height: 2.5em;
+        margin: 0 auto -2em;
+        position: relative;
+        width: 2.5em;
+    }
+    ol.progress-track li.progress-todo .icon-wrap .icon-check-mark,
+    ol.progress-track li.progress-todo .icon-wrap .icon-down-arrow {
+        display: none;
+    }
 
+    #tablePanelBody {
+        padding: 0;
+    }
 
+    with-nav-tabs.panel-default .nav-tabs > li > a,
+    with-nav-tabs.panel-default .nav-tabs > li > a:hover,
+    with-nav-tabs.panel-default .nav-tabs > li > a:focus {
+        color: #777;
+    }
+    with-nav-tabs.panel-default .nav-tabs > .open > a,
+    with-nav-tabs.panel-default .nav-tabs > .open > a:hover,
+    with-nav-tabs.panel-default .nav-tabs > .open > a:focus,
+    with-nav-tabs.panel-default .nav-tabs > li > a:hover,
+    with-nav-tabs.panel-default .nav-tabs > li > a:focus {
+        color: #777;
+        background-color: #ddd;
+        border-color: transparent;
+    }
+    with-nav-tabs.panel-default .nav-tabs > li.active > a,
+    with-nav-tabs.panel-default .nav-tabs > li.active > a:hover,
+    with-nav-tabs.panel-default .nav-tabs > li.active > a:focus {
+        color: #555;
+        background-color: #fff;
+        border-color: #ddd;
+        border-bottom-color: transparent;
+    }
+    with-nav-tabs.panel-default .nav-tabs > li.dropdown .dropdown-menu {
+        background-color: #f5f5f5;
+        border-color: #ddd;
+    }
+    with-nav-tabs.panel-default .nav-tabs > li.dropdown .dropdown-menu > li > a {
+        color: #777;
+    }
+    with-nav-tabs.panel-default .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
+    with-nav-tabs.panel-default .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
+        background-color: #ddd;
+    }
+    with-nav-tabs.panel-default .nav-tabs > li.dropdown .dropdown-menu > .active > a,
+    with-nav-tabs.panel-default .nav-tabs > li.dropdown .dropdown-menu > .active > a:hover,
+    with-nav-tabs.panel-default .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
+        color: #fff;
+        background-color: #555;
+    }
+</style>
+
+<div class="panel panel-info">
+    <div class="panel-heading text-center">
+        <h1 class="panel-title">Order Details for {{ order['case-id'] }}</h1>
+    </div>
+    <div class="panel-body">
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-1 sidebar-pf sidebar-pf-left full-height sidebar-actions"></div>
-        <div class="col-md-10">
-            <div class="container-fluid">
+        <ol class="progress-track">
+            <li class="progress-done" ng-if="milestones.get('Hardware spec ready') != null">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
 
-                <div class="row">
-                    <div class="col-md-12">
-                        <h3>Order number {{ order['case-id'] }}</h3>
-                        <hr/>
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
                     </div>
-                </div>
-                <div class="row" ng-if="errorMessage != null">
-                    <div class="col-md-12">
-                        <div class="alert alert-danger alert-dismissable">
-						  <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-						    <span class="pficon pficon-close"></span>
-						  </button>
-						  <span class="pficon pficon-error-circle-o"></span>
-						  <strong>Hey there is a problem!</strong><br/>{{errorMessage}}
-						</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <button type="button" class="col-md-1 btn btn-danger pull-right title-action" ng-click="closeOrder(order['case-id'])">Close</button>
-                        <div ng-if="managerDecision == false"> 
-                        <button type="button" class="col-md-1 btn btn-primary pull-right title-action" ng-click="requestManagerApproval(order['case-id'])">Request approval</button>
-                        </div>
-                        <div ng-if="milestones.get('Milestone 1: Order placed') != null && milestones.get('Milestone 2: Order shipped') == null">
-                            <button type="button" class="col-md-1 btn btn-primary pull-right title-action" ng-click="shipOrder(order['case-id'])">Ship order</button>
-                        </div>
-                        <div ng-if="milestones.get('Milestone 2: Order shipped') != null && milestones.get('Milestone 3: Delivered to customer') == null">
-                        <button type="button" class="col-md-1 btn btn-primary pull-right title-action" ng-click="deliverOrder(order['case-id'])">Deliver order</button>
-                        </div>                        
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <hr/>
-                    </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-3">
-                      <div class="row">
-                          <div class="panel-group" id="accordion-markup" style="width:90%">
-                            <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <h4 class="panel-title">
-                                  <a data-toggle="collapse" data-parent="#accordion-markup" href="">
-                                    Hardware specification
-                                  </a>
-                                </h4>
-                              </div>
-                              <div id="collapseOne" class="panel-collapse collapse in">                              
-                                <div ng-if="milestones.get('Hardware spec ready') != null">
-	                                
-	                                <div class="alert alert-success alert-dismissable">								  
-									  <span class="pficon pficon-ok"></span>
-									  Hardware specification has been provided by supplier.<br>
-									  Completed at  {{milestones.get('Hardware spec ready') | date:'dd.MM.yyyy HH:mm:ss'}}
-									</div>                                 
-                                </div>
-                                <div ng-if="milestones.get('Hardware spec ready') == null">                                
-	                                <div class="alert alert-info alert-dismissable">
-									  <span class="pficon pficon-info"></span>
-									  Awaiting supplier to deliver hardware spec
-									</div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <h4 class="panel-title">
-                                  <a data-toggle="collapse" data-parent="#accordion-markup" href="">
-                                    Manager approval
-                                  </a>
-                                </h4>
-                              </div>
-                              <div id="collapseOne" class="panel-collapse collapse in">
-                                <div ng-if="milestones.get('Manager decision') != null">
-                                    
-	                                 <div ng-if="managerDecision == true">
-	                                    
-	                                    <div class="alert alert-success alert-dismissable">                               
-	                                      <span class="pficon pficon-ok"></span>
-	                                      Manager has approved this order.<br>
-	                                      Completed at  {{milestones.get('Manager decision') | date:'dd.MM.yyyy HH:mm:ss'}}
-	                                      <br/><br/>
-	                                      <strong>{{managerComment}}</strong>
-	                                    </div>                                 
-	                                </div>
-	                                <div ng-if="managerDecision == false">                                
-	                                    <div class="alert alert-danger alert-dismissable">
-	                                      <span class="pficon pficon-error-circle-o"></span>
-	                                      Manager rejected this order.
-	                                      <br/><br/>
-                                          <strong>{{managerComment}}</strong>
-	                                    </div>
-	                                </div>
-                                                              
-                                </div>
-                                <div ng-if="milestones.get('Manager decision') == null">                                
-                                    <div class="alert alert-info alert-dismissable">
-                                      <span class="pficon pficon-info"></span>
-                                      Awaiting manager decision
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <h4 class="panel-title">
-                                  <a data-toggle="collapse" data-parent="#accordion-markup" href="">
-                                    Order placed
-                                  </a>
-                                </h4>
-                              </div>
-                              <div id="collapseOne" class="panel-collapse collapse in">
-                                <div ng-if="milestones.get('Milestone 1: Order placed') != null">
-                                    
-                                    <div class="alert alert-success alert-dismissable">                               
-                                      <span class="pficon pficon-ok"></span>
-                                      Order has been placed.<br>
-                                      Completed at  {{milestones.get('Milestone 1: Order placed') | date:'dd.MM.yyyy HH:mm:ss'}}
-                                    </div>                                 
-                                </div>
-                                <div ng-if="milestones.get('Milestone 1: Order placed') == null">                                
-                                    <div class="alert alert-info alert-dismissable">
-                                      <span class="pficon pficon-info"></span>
-                                      Awaiting order to be placed
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <h4 class="panel-title">
-                                  <a data-toggle="collapse" data-parent="#accordion-markup" href="">
-                                    Order shipped
-                                  </a>
-                                </h4>
-                              </div>
-                              <div id="collapseTwo" class="panel-collapse collapse in">
-                                <div ng-if="milestones.get('Milestone 2: Order shipped') != null">
-                                    
-                                    <div class="alert alert-success alert-dismissable">                               
-                                      <span class="pficon pficon-ok"></span>
-                                      Order has been shipped.<br>
-                                      Completed at  {{milestones.get('Milestone 2: Order shipped') | date:'dd.MM.yyyy HH:mm:ss'}}
-                                    </div>                                 
-                                </div>
-                                <div ng-if="milestones.get('Milestone 2: Order shipped') == null">                                
-                                    <div class="alert alert-info alert-dismissable">
-                                      <span class="pficon pficon-info"></span>
-                                      Awaiting order shippment
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="panel panel-default">
-                              <div class="panel-heading">
-                                <h4 class="panel-title">
-                                  <a data-toggle="collapse" data-parent="#accordion-markup" href="">
-                                    Order delivered
-                                  </a>
-                                </h4>
-                              </div>
-                              <div id="collapseThree" class="panel-collapse collapse in">
-                                <div ng-if="milestones.get('Milestone 3: Delivered to customer') != null">
-                                    
-                                    <div class="alert alert-success alert-dismissable">                               
-                                      <span class="pficon pficon-ok"></span>
-                                      Order has been delivered.<br>
-                                      Completed at  {{milestones.get('Milestone 3: Delivered to customer') | date:'dd.MM.yyyy HH:mm:ss'}}
-                                    </div>                                 
-                                </div>
-                                <div ng-if="milestones.get('Milestone 3: Delivered to customer') == null">                                
-                                    <div class="alert alert-info alert-dismissable">
-                                      <span class="pficon pficon-info"></span>
-                                      Awaiting order delivery
-                                    </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
+                    <span class="progress-text" title="Hardware specification has been provided by supplier."><strong>Hardware Specification</strong></span>
+                </center>
+            </li>
+            <li class="progress-todo" ng-if="milestones.get('Hardware spec ready') == null">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
 
-                  <div class="col-md-6">
-                    <div class="row">
-                      <div class="panel panel-default">
-                        <div class="panel-body" style="height:400px">
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
+                    </div>
+                    <span class="progress-text" title="Awaiting supplier to deliver hardware spec"><strong>Hardware Specification</strong></span>
+                </center>
+            </li>
+
+
+            <li class="progress-done" ng-if="milestones.get('Manager decision') != null && managerDecision == true">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
+
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
+                    </div>
+                    <span class="progress-text"
+                          title="Manager has approved this order: {{managerComment}}">
+                          <strong>Manager Approval</strong></span>
+                </center>
+            </li>
+
+            <li class="progress-rejected" ng-if="milestones.get('Manager decision') != null && managerDecision == false">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
+
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
+                    </div>
+                    <span class="progress-text"
+                          title="Manager rejected this order: {{managerComment}}">
+                        <strong>Manager Approval</strong></span>
+                </center>
+            </li>
+
+            <li class="progress-todo" ng-if="milestones.get('Manager decision') == null">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
+
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
+                    </div>
+                    <span class="progress-text" title="Awaiting manager decision"><strong>Manager Approval</strong></span>
+                </center>
+            </li>
+
+            <li class="progress-done" ng-if="milestones.get('Milestone 1: Order placed') != null">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
+
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
+                    </div>
+                    <span class="progress-text" title="Order has been placed at {{milestones.get('Milestone 1: Order placed') | date:'dd.MM.yyyy HH:mm:ss'}}"><strong>Order Placed</strong></span>
+                </center>
+            </li>
+            <li class="progress-todo" ng-if="milestones.get('Milestone 1: Order placed') == null">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
+
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
+                    </div>
+                    <span class="progress-text" title="Awaiting order to be placed"><strong>Order Placed</strong></span>
+                </center>
+            </li>
+
+            <li class="progress-done" ng-if="milestones.get('Milestone 2: Order shipped') != null">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
+
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
+                    </div>
+                    <span class="progress-text" title="Order has been shipped at {{milestones.get('Milestone 2: Order shipped') | date:'dd.MM.yyyy HH:mm:ss'}}"><strong>Order Shipped</strong></span>
+                </center>
+            </li>
+            <li class="progress-todo" ng-if="milestones.get('Milestone 2: Order shipped') == null">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
+
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
+                    </div>
+                    <span class="progress-text" title="Awaiting order shippment"><strong>Order Shipped</strong></span>
+                </center>
+            </li>
+
+            <li class="progress-done" ng-if="milestones.get('Milestone 3: Delivered to customer') != null">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
+
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
+                    </div>
+                    <span class="progress-text" title="Order has been delivered at {{milestones.get('Milestone 3: Delivered to customer') | date:'dd.MM.yyyy HH:mm:ss'}}"><strong>Order Delivered</strong></span>
+                </center>
+            </li>
+            <li class="progress-todo" ng-if="milestones.get('Milestone 3: Delivered to customer') == null">
+                <center>
+                    <div class="icon-wrap">
+                        <svg class="icon-state icon-check-mark">
+                            <use xlink:href="#icon-check-mark"></use>
+                        </svg>
+
+                        <svg class="icon-state icon-down-arrow">
+                            <use xlink:href="#icon-down-arrow"></use>
+                        </svg>
+                    </div>
+                    <span class="progress-text" title="Awaiting order delivery"><strong>Order Delivered</strong></span>
+                </center>
+            </li>
+        </ol>
+    </div>
+
+    <div class="container">
+        <div class="row" ng-if="errorMessage != null">
+            <div class="col-md-12">
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                        <span class="pficon pficon-close"></span>
+                    </button>
+                    <span class="pficon pficon-error-circle-o"></span>
+                    <strong>Hey there is a problem!</strong><br/>{{errorMessage}}
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class=""><strong>Participants</strong></h3>
+                    </div>
+                    <div class="panel-body" id="tablePanelBody">
+                        <div class="list-group" ng-repeat="role in order['case-roles']">
+                            <li class="list-group-item list-group-item-info"><strong>{{ role.name | capitalize}}</strong></li>
+                            <li class="list-group-item" ng-if="role.users.length > 0">
+                                <span class="glyphicon glyphicon-user" ng-repeat="user in role.users"><strong> {{ user }} </strong></span>
+                            </li>
+                            <li class="list-group-item" ng-if="role.groups.length > 0">
+                                <span class="glyphicon glyphicon-user" ng-repeat="group in role.groups"><strong> {{ group }} </strong></span>
+                            </li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class=""><strong>Actions</strong></h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="list-group">
+                            <li class="list-group-item">
+                                <button type="button" class="btn btn-danger btn-lg btn-block" ng-click="closeOrder(order['case-id'])">Close</button>
+                            </li>
+                            <li class="list-group-item" ng-if="managerDecision == false && globals.currentUser.role == 'Employee'">
+                                <button type="button" class="btn btn-success btn-lg btn-block" ng-click="requestManagerApproval(order['case-id'])">Request Approval</button>
+                            </li>
+                            <li class="list-group-item" ng-if="milestones.get('Milestone 1: Order placed') != null && milestones.get('Milestone 2: Order shipped') == null">
+                                <button type="button" class="btn btn-success btn-lg btn-block" ng-click="shipOrder(order['case-id'])">Ship Order</button>
+                            </li>
+                            <li class="list-group-item" ng-if="milestones.get('Milestone 2: Order shipped') != null && milestones.get('Milestone 3: Delivered to customer') == null">
+                                <button type="button" class="btn btn-success btn-lg btn-block" ng-click="deliverOrder(order['case-id'])">Deliver Order</button>
+                            </li>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class=""><strong>Details</strong></h3>
+                    </div>
+                    <div class="panel-body">
+
+
                             <ul class="nav nav-tabs">
-                              <li class="active"><a href="" data-toggle="tab" data-target="#hardware">Hardware specification</a></li>
-                              <li><a href="" data-toggle="tab" data-target="#comments" ng-click="showComments()">Comments</a></li>
-                              <li><a href="" data-toggle="tab" data-target="#mytasks" ng-click="showTasks()">My tasks</a></li>
+                                <li class="active"><a href="" data-toggle="tab" data-target="#hardware">Hardware specification</a></li>
+                                <li><a href="" data-toggle="tab" data-target="#comments" ng-click="showComments()">Comments</a></li>
+                                <li><a href="" data-toggle="tab" data-target="#mytasks" ng-click="showTasks()">My tasks</a></li>
                             </ul>
 
                             <div id="my-tab-content" class="tab-content">
                                 <div class="tab-pane active" id="hardware">
-                                    <div ng-include ="'modules/order/views/show-hardware-spec.html'"></div>
+                                    <div ng-include="'modules/order/views/show-hardware-spec.html'"></div>
                                 </div>
                                 <div class="tab-pane" id="comments">
-                                    <div ng-include ="'modules/order/views/show-comments.html'"></div>
+                                    <div ng-include="'modules/order/views/show-comments.html'"></div>
                                 </div>
                                 <div class="tab-pane" id="mytasks">
-                                    <div ng-include ="'modules/order/views/show-tasks.html'"></div>
+                                    <div ng-include="'modules/order/views/show-tasks.html'"></div>
                                 </div>
                             </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
 
-                  <div class="col-md-3">
-                      <div class="row">
-                       <div class="panel-group pull-right" id="involvements" style="width:90%">
-                        <div class="panel panel-default">
-                          <div class="panel-heading">Involved</div>
-                          <div class="panel-body">
-                              <ul class="list-group">
-                                  <li class="list-group-item" ng-repeat="role in order['case-roles']">
-                                       <b>{{ role.name }}</b>
-                                       <div ng-if="role.users.length > 0">
-                                           <ul class="list-group">
-                                               <li class="list-group-item" ng-repeat="user in role.users">
-                                                <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                                {{ user }}
-                                            </li>
-                                            </ul>
-                                       </div>
-                                       <div ng-if="role.groups.length > 0">
-                                         <ul class="list-group">
-                                             <li class="list-group-item" ng-repeat="group in role.groups">
-                                                 <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                                                  {{ group }}
-                                             </li>
-                                           </ul>
-                                       </div>
-                                  </li>
-                                </ul>
-                          </div>
-                        </div>
+
                     </div>
-                      </div>
-                  </div>
                 </div>
             </div>
+
         </div>
-        <div class="col-md-1 sidebar-pf sidebar-pf-right full-height" data-field="side-bar-right"></div>
+
+    </div>
+
+</div>
     </div>
 </div>

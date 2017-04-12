@@ -1,14 +1,9 @@
-<header ng-include src="'modules/home/views/menu.html'">
-</header>
-<div>
+<div class="panel panel-info">
+    <div class="panel-heading text-center">
+        <h1 class="panel-title"><strong>Hardware specification for Order {{task['task-input-data']['orderNumber']}}</strong></h1>
+    </div>
+    <div class="panel-body">
     <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <h2>Hardware specification for order {{task['task-input-data']['orderNumber']}}</h2>
-                </div>
-            </div>
-        </div>
         <div class="container">
             <div class="alert alert-danger" ng-show="data.error.code">
                 {{data.error.message}}
@@ -43,4 +38,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>
