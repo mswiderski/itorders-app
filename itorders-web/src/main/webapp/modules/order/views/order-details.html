@@ -138,9 +138,14 @@
         color: #fff;
         background-color: #555;
     }
+
+    .list-group-item-plain {
+        color: #31708f;
+        background-color: #ffffff;
+    }
 </style>
 
-<div class="panel panel-info">
+<div class="panel panel-default">
     <div class="panel-heading text-center">
         <h1 class="panel-title">Order Details for {{ order['case-id'] }}</h1>
     </div>
@@ -338,7 +343,7 @@
                     </div>
                     <div class="panel-body" id="tablePanelBody">
                         <div class="list-group" ng-repeat="role in order['case-roles']">
-                            <li class="list-group-item list-group-item-info"><strong>{{ role.name | capitalize}}</strong></li>
+                            <li class="list-group-item list-group-item-plain"><strong>{{ role.name | capitalize}}</strong></li>
                             <li class="list-group-item" ng-if="role.users.length > 0">
                                 <span class="glyphicon glyphicon-user" ng-repeat="user in role.users"><strong> {{ user }} </strong></span>
                             </li>
