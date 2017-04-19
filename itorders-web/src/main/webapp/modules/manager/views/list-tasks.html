@@ -1,30 +1,28 @@
 <header ng-include src="'modules/home/views/menu.html'"></header>
-
-<div class="container-fluid center-block" id="ordersdiv">
-  <table class="table table-striped">
-    <caption>Pending Approvals</caption>
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>Type</th>
-      <th>Description</th>
-      <th>Created On</th>
-      <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="task in tasks">
-      <td> {{$index + 1}} </td>
-      <td>{{ task['task-name'] }}</td>
-      <td>{{ task['task-description'] }}</td>
-      <td>{{task['task-created-on'] | date:'dd.MM.yyyy HH:mm:ss'}}</td>
-      <td>
+<div class="container-fluid">
+  <div class="list-group list-view-pf list-view-pf-view">
+    <div class="list-group-item" ng-repeat="task in tasks">
+      <div class="list-view-pf-actions">
         <button class="btn btn-primary" data-toggle="modal" data-target="#approveModal" ng-click="selected(task['task-id'])">Approve</button>
         <button class="btn btn-danger" data-toggle="modal" data-target="#rejectModal" ng-click="selected(task['task-id'])">Reject</button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
+      </div>
+      <div class="list-view-pf-main-info">
+        <div class="list-view-pf-left">
+          <span class="glyphicon glyphicon-list"></span>
+        </div>
+        <div class="list-view-pf-body">
+          <div class="list-view-pf-description">
+            <div class="list-group-item-heading">
+              {{ task['task-name'] }}
+            </div>
+            <div class="list-group-item-text">
+              {{ task['task-description'] }} created at {{task['task-created-on'] | date:'dd.MM.yyyy HH:mm:ss'}}.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="modal fade" id="approveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

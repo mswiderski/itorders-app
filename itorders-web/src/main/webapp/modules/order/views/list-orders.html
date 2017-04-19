@@ -1,51 +1,33 @@
 <header ng-include src="'modules/home/views/menu.html'"></header>
-<style>
-  tbody tr:hover.selected td,
-  tbody tr:hover td {
-    background-color: #E8E8E8;
-    cursor: pointer;
-  }
-  tbody tr.selected td {
-    background-color: #B8B8B8;
-  }
-</style>
-<script>
+<div class="container-fluid">
+  <div class="list-group list-view-pf list-view-pf-view">
+    <div class="list-group-item" ng-repeat="order in orders">
+      <div class="list-view-pf-actions">
+        <button class="btn btn-default" ng-click="selected(order['case-id'], '/orders')">Open</button>
+        <div class="dropdown pull-right dropdown-kebab-pf">
+          <button class="btn btn-link dropdown-toggle" type="button" id="dropdownKebabRight14" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="true">
+          </button>
+        </div>
 
-    $(".table").on('click','tr',function(e){
-        e.preventDefault();
-        var id = $(this).attr('value');
-        $(this)
-            .toggleClass("selected")
-            .siblings(".selected")
-            .removeClass("selected");
-
-        var ordersdivid = $(this).closest("div").prop('id');
-        angular.element('#'+ordersdivid).scope().selected(id);
-        angular.element('#'+ordersdivid).scope().$apply();
-    });
-
-</script>
-<div class="container-fluid center-block" id="ordersdiv">
-  <table class="table table-striped">
-    <caption>All Orders</caption>
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>Order Type</th>
-      <th>Order Number</th>
-      <th>Initiated by</th>
-      <!--<th>Actions</th>-->
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="order in orders" value="{{order['case-id']}}">
-      <td> {{$index + 1}} </td>
-      <td>{{ order['case-description'] }}</td>
-      <td>{{ order['case-id'] }}</td>
-      <td>{{ order['case-owner'] }}</td>
-    </tr>
-    </tbody>
-  </table>
+      </div>
+      <div class="list-view-pf-main-info">
+        <div class="list-view-pf-left">
+          <span class="glyphicon glyphicon-list"></span>
+        </div>
+        <div class="list-view-pf-body">
+          <div class="list-view-pf-description">
+            <div class="list-group-item-heading">
+              {{ order['case-description'] }}
+            </div>
+            <div class="list-group-item-text">
+              Order number <b>{{ order['case-id'] }}</b> initiated by {{ order['case-owner'] }}.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="page-content">

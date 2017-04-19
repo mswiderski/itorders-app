@@ -1,50 +1,32 @@
 <header ng-include src="'modules/home/views/menu.html'"></header>
-<style>
-  tbody tr:hover.selected td,
-  tbody tr:hover td {
-    background-color: #E8E8E8;
-    cursor: pointer;
-  }
-  tbody tr.selected td {
-    background-color: #B8B8B8;
-  }
-</style>
-<script>
-
-    $(".table").on('click','tr',function(e){
-        e.preventDefault();
-        var id = $(this).attr('value');
-        $(this)
-            .toggleClass("selected")
-            .siblings(".selected")
-            .removeClass("selected");
-
-        var orderstobeplaceddiv = $(this).closest("div").prop('id');
-        angular.element('#'+orderstobeplaceddiv).scope().selected(id);
-        angular.element('#'+orderstobeplaceddiv).scope().$apply();
-    });
-
-</script>
-<div class="container-fluid center-block" id="orderstobeplaceddiv">
-  <table class="table table-striped">
-    <caption>Orders to be placed</caption>
-    <thead>
-    <tr>
-      <th>#</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Status</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="task in tasks" value="{{task['task-id']}}">
-      <td> {{$index + 1}} </td>
-      <td>{{ task['task-name'] }}</td>
-      <td>{{ task['task-description'] }}</td>
-      <td>{{ task['task-status'] }}</td>
-    </tr>
-    </tbody>
-  </table>
+<div class="container-fluid">
+  <div class="list-group list-view-pf list-view-pf-view">
+    <div class="list-group-item" ng-repeat="task in tasks">
+      <div class="list-view-pf-actions">
+        <div ng-if="task['task-status'] == 'Ready'">
+          <button class="btn btn-default" ng-click="selected(task['task-id'])">Place an order</button>
+        </div>
+        <div ng-if="task['task-status'] == 'Reserved' || task['task-status'] == 'InProgress'">
+          <button class="btn btn-default" ng-click="selected(task['task-id'])">Continue</button>
+        </div>
+      </div>
+      <div class="list-view-pf-main-info">
+        <div class="list-view-pf-left">
+          <span class="glyphicon glyphicon-list"></span>
+        </div>
+        <div class="list-view-pf-body">
+          <div class="list-view-pf-description">
+            <div class="list-group-item-heading">
+              {{ task['task-name'] }}
+            </div>
+            <div class="list-group-item-text">
+              {{ task['task-description'] }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="page-content">
