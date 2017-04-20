@@ -370,8 +370,8 @@
                             <li class="list-group-item" ng-if="milestones.get('Milestone 1: Order placed') != null && milestones.get('Milestone 2: Order shipped') == null">
                                 <button type="button" class="btn btn-success btn-lg btn-block" ng-click="shipOrder(order['case-id'])">Ship Order</button>
                             </li>
-                            <li class="list-group-item" ng-if="milestones.get('Milestone 2: Order shipped') != null && milestones.get('Milestone 3: Delivered to customer') == null">
-                                <button type="button" class="btn btn-success btn-lg btn-block" ng-click="deliverOrder(order['case-id'])">Deliver Order</button>
+                            <li class="list-group-item"  restrict access="Employee" ng-if="milestones.get('Milestone 2: Order shipped') != null && milestones.get('Milestone 3: Delivered to customer') == null">
+                                <button type="button" class="btn btn-success btn-lg btn-block" ng-click="deliverOrder(order['case-id'])">Received Order</button>
                             </li>
 
                         </div>
