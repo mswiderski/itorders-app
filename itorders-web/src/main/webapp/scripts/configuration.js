@@ -23,6 +23,7 @@ var application = {
     "roles" : [
         {name: "tihomir", value: "Supplier"},
         {name: "maciek", value: "Employee"},
-        {name: "krisv", value: "Manager"}
+        {name: "krisv", value: "Manager"},
+        {name: "paul", value: "Manager"}
     ]
 };
