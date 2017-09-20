@@ -7,8 +7,8 @@
   <name>IT Orders application</name>
 
     <properties>
-    <version.wildfly-swarm>2017.6.1</version.wildfly-swarm>
-    <version.org.kie>7.0.0.Final</version.org.kie>
+    <version.wildfly-swarm>2017.9.4</version.wildfly-swarm>
+    <version.org.kie>7.3.0.Final</version.org.kie>
 
     <version.h2>1.4.187</version.h2>
     <version.postgresql>9.4.1207</version.postgresql>
