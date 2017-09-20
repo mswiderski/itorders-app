@@ -20,7 +20,7 @@ Application by default runs with H2 in memory data base but can be reconfigured 
 4. start WildFly Swarm with:
 
 ```
-java -Dorg.kie.server.location=http://localhost:8080/rest/server -jar target/itorders-web-1.0.0-swarm.jar
+java -Dorg.kie.server.location=http://localhost:8180/rest/server -Dswarm.port.offset=100 -jar target/itorders-web-1.0.0-swarm.jar
 ```
 
 Wait a while and once the server is up ... will see the following messages:
@@ -28,7 +28,26 @@ Wait a while and once the server is up ... will see the following messages:
 2017-01-09 14:27:26,612 INFO  [stdout] (main) 	SUCCESS :: IT Orders application ready!!!
 2017-01-09 14:27:26,615 INFO  [org.wildfly.swarm] (main) WFSWARM99999: WildFly Swarm is Ready
 ```
-then go to browser and open link: http://localhost:8080
+then go to browser and open link: http://localhost:8180
+
+How to run it with controller
+--------------------
+
+Start workbench and create new server template with following information:
+1. server template name - itorders
+2. create new container
+name: itorders
+alias: itorders
+groupid: org.jbpm.demo.apps
+artifactid: itorders
+version: 1.0.0
+3. start WildFly Swarm with:
+
+```
+java -Dorg.kie.server.location=http://localhost:8180/rest/server -Dswarm.port.offset=100 -Dorg.kie.server.id=itorders -Dorg.kie.server.controller=http://localhost:8080/kie-wb/rest/controller -jar target/itorders-web-1.0.0-swarm.jar
+```
+
+Make sure that same users are defined in workbench security as they are in this application so workbench can be used to load data.
 
 How to logon
 ----------------

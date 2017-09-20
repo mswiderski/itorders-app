@@ -7,7 +7,7 @@ var application = {
     'page_size' : 10,
     'kieserver_container' : 'itorders',
     'kieserver_processId' : '',
-    'kieserver_url' : 'http://localhost:8080/rest/server',
+    'kieserver_url' : 'http://localhost:8180/rest/server',
     'suppliers' : [
        {'id': 'apple', 'name': 'Apple'},
        {'id': 'dell', 'name': 'Dell'},
